@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package geovision;
+
+import "model/data_models.proto";
+import "google/api/annotations.proto";
+
+option go_package = "omnisciens/geovision";
+
+// EmailService provides operations for managing emails
+service EmailService {
+  rpc GetEmail(GetEmailRequest) returns (GetEmailResponse) {
+    option (google.api.http) = {
+      get: "/v1/emails/{id}"
+    };
+  }
+
+  rpc CreateEmail(CreateEmailRequest) returns (CreateEmailResponse) {
+    option (google.api.http) = {
+      post: "/v1/emails"
+      body: "email"
+    };
+  }
+
+  rpc UpdateEmail(UpdateEmailRequest) returns (UpdateEmailResponse) {
+    option (google.api.http) = {
+      put: "/v1/emails/{id}"
+      body: "email"
+    };
+  }
+
+  rpc DeleteEmail(DeleteEmailRequest) returns (DeleteEmailResponse) {
+    option (google.api.http) = {
+      delete: "/v1/emails/{id}"
+    };
+  }
+}
+
+// Email messages
+message GetEmailRequest {
+  string id = 1;
+}
+
+message GetEmailResponse {
+  osint.Email email = 1;
+}
+
+message CreateEmailRequest {
+  osint.Email email = 1;
+}
+
+message CreateEmailResponse {
+  osint.Email email = 1;
+}
+
+message UpdateEmailRequest {
+  string id = 1;
+  osint.Email email = 2;
+}
+
+message UpdateEmailResponse {
+  osint.Email email = 1;
+}
+
+message DeleteEmailRequest {
+  string id = 1;
+}
+
+message DeleteEmailResponse {
+  bool success = 1;
+}

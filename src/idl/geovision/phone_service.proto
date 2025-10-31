@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package geovision;
+
+import "model/data_models.proto";
+import "google/api/annotations.proto";
+
+option go_package = "omnisciens/geovision";
+
+// PhoneService provides operations for managing phones
+service PhoneService {
+  rpc GetPhone(GetPhoneRequest) returns (GetPhoneResponse) {
+    option (google.api.http) = {
+      get: "/v1/phones/{id}"
+    };
+  }
+
+  rpc CreatePhone(CreatePhoneRequest) returns (CreatePhoneResponse) {
+    option (google.api.http) = {
+      post: "/v1/phones"
+      body: "phone"
+    };
+  }
+
+  rpc UpdatePhone(UpdatePhoneRequest) returns (UpdatePhoneResponse) {
+    option (google.api.http) = {
+      put: "/v1/phones/{id}"
+      body: "phone"
+    };
+  }
+
+  rpc DeletePhone(DeletePhoneRequest) returns (DeletePhoneResponse) {
+    option (google.api.http) = {
+      delete: "/v1/phones/{id}"
+    };
+  }
+}
+
+// Phone messages
+message GetPhoneRequest {
+  string id = 1;
+}
+
+message GetPhoneResponse {
+  osint.Phone phone = 1;
+}
+
+message CreatePhoneRequest {
+  osint.Phone phone = 1;
+}
+
+message CreatePhoneResponse {
+  osint.Phone phone = 1;
+}
+
+message UpdatePhoneRequest {
+  string id = 1;
+  osint.Phone phone = 2;
+}
+
+message UpdatePhoneResponse {
+  osint.Phone phone = 1;
+}
+
+message DeletePhoneRequest {
+  string id = 1;
+}
+
+message DeletePhoneResponse {
+  bool success = 1;
+}

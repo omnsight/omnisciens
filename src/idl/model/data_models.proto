@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package osint;
+
+option go_package = "omnisciens/osint";
+
+// Relation represents a connection between two entities
+message Relation {
+  string id = 1 [json_name = "_id"];
+  string from = 2 [json_name = "_from"];
+  string to = 3 [json_name = "_to"];
+  double confidence = 4;
+  map<string, string> attributes = 5;
+  int64 created_at = 6 [json_name = "created_at"];
+  int64 updated_at = 7 [json_name = "updated_at"];
+}
+
+// Event represents a piece of news, local event etc.
+message Event {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string title = 4;
+  string description = 5;
+  int64 timestamp = 6;
+  repeated string categories = 7;
+  string severity = 8;
+  int64 happened_at = 9;
+  bool visible = 10;
+}
+
+// Source represents an information source (news outlet, social media etc.)
+message Source {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string name = 4;
+  string url = 5;
+  string type = 6;
+  double reliability = 7;
+  int64 last_checked = 8;
+  int64 published_at = 9;
+  bool visible = 10;
+}
+
+// Person represents an individual
+message Person {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string name = 4;
+  repeated string aliases = 5;
+  string role = 6;
+  string nationality = 7;
+  int64 created_at = 8;
+  int64 updated_at = 9;
+  bool visible = 10;
+}
+
+// Organization represents a company, NGO, government agency etc.
+message Organization {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string name = 4;
+  string type = 5;
+  int64 founded = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+  bool visible = 9;
+}
+
+// Location represents a geographic location
+message Location {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string name = 4;
+  double latitude = 5;
+  double longitude = 6;
+  string country = 7;
+  string administrative_area = 8;
+  string type = 9;
+  int64 created_at = 10;
+  int64 updated_at = 11;
+  bool visible = 12;
+}
+
+// Website represents a web resource
+message Website {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string url = 4;
+  string domain = 5;
+  string title = 6;
+  string description = 7;
+  string category = 8;
+  int64 last_visited = 9;
+  int64 created_at = 10;
+  int64 updated_at = 11;
+  bool visible = 12;
+}
+
+// Email represents an email address
+message Email {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string address = 4;
+  string domain = 5;
+  bool valid = 6;
+  int64 first_seen = 7;
+  int64 created_at = 8;
+  int64 updated_at = 9;
+  bool visible = 10;
+}
+
+// Phone represents a phone number
+message Phone {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string number = 4;
+  string country_code = 5;
+  string type = 6;
+  string carrier = 7;
+  int64 first_seen = 8;
+  int64 created_at = 9;
+  int64 updated_at = 10;
+  bool visible = 11;
+}
+
+// IP represents an IP address
+message Ip {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string address = 4;
+  string version = 5;  // IPv4 or IPv6
+  string hostname = 6;
+  string location_key = 7 [json_name = "location_key"];  // Reference to Location entity
+  int64 first_seen = 8;
+  int64 created_at = 9;
+  int64 updated_at = 10;
+  bool visible = 11;
+}
+
+// SocialMedia represents a social media account
+message SocialMedia {
+  string id = 1 [json_name = "_id"];
+  string key = 2 [json_name = "_key"];
+  string rev = 3 [json_name = "_rev"];
+  string platform = 4;  // e.g., Twitter, Facebook, LinkedIn
+  string username = 5;
+  string profile_url = 6 [json_name = "profile_url"];
+  string display_name = 7 [json_name = "display_name"];
+  int64 created_at = 8;
+  int64 updated_at = 9;
+  bool visible = 10;
+}

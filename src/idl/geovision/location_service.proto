@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package geovision;
+
+import "model/data_models.proto";
+import "google/api/annotations.proto";
+
+option go_package = "omnisciens/geovision";
+
+// LocationService provides operations for managing locations
+service LocationService {
+  rpc GetLocation(GetLocationRequest) returns (GetLocationResponse) {
+    option (google.api.http) = {
+      get: "/v1/locations/{id}"
+    };
+  }
+
+  rpc CreateLocation(CreateLocationRequest) returns (CreateLocationResponse) {
+    option (google.api.http) = {
+      post: "/v1/locations"
+      body: "location"
+    };
+  }
+
+  rpc UpdateLocation(UpdateLocationRequest) returns (UpdateLocationResponse) {
+    option (google.api.http) = {
+      put: "/v1/locations/{id}"
+      body: "location"
+    };
+  }
+
+  rpc DeleteLocation(DeleteLocationRequest) returns (DeleteLocationResponse) {
+    option (google.api.http) = {
+      delete: "/v1/locations/{id}"
+    };
+  }
+}
+
+// Location messages
+message GetLocationRequest {
+  string id = 1;
+}
+
+message GetLocationResponse {
+  osint.Location location = 1;
+}
+
+message CreateLocationRequest {
+  osint.Location location = 1;
+}
+
+message CreateLocationResponse {
+  osint.Location location = 1;
+}
+
+message UpdateLocationRequest {
+  string id = 1;
+  osint.Location location = 2;
+}
+
+message UpdateLocationResponse {
+  osint.Location location = 1;
+}
+
+message DeleteLocationRequest {
+  string id = 1;
+}
+
+message DeleteLocationResponse {
+  bool success = 1;
+}
