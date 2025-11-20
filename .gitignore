@@ -141,3 +141,5 @@ vite.config.ts.timestamp-*
 **/generated
 
 .DS_Store
+
+_design_spec
