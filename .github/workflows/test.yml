@@ -3,6 +3,7 @@ name: Test
 on:
   push:
     branches: ['*']
+  workflow_dispatch: # 允许手动触发
 
 jobs:
   test:
