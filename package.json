@@ -1,0 +1,45 @@
+{
+  "name": "omni-api-tests",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "API tests for Omni services",
+  "main": "dist/api-tests.js",
+  "scripts": {
+    "setup": "npx tsx src/localtest.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --write ."
+  },
+  "keywords": [
+    "testing",
+    "api",
+    "omni"
+  ],
+  "author": "Omni Team",
+  "license": "MIT",
+  "dependencies": {
+    "@keycloak/keycloak-admin-client": "^26.4.5",
+    "@omnsight/clients": "^1.0.5",
+    "es-main": "^1.4.0",
+    "js-yaml": "^4.1.1",
+    "jwt-decode": "^4.0.0",
+    "keycloak-js": "^26.2.1"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.14"
+  }
+}
