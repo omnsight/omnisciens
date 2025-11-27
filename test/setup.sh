@@ -8,11 +8,6 @@ NC='\033[0m' # No Color
 
 echo -e "${GREEN}Deploying Omni services locally...${NC}"
 
-# Make sure we're in the right directory
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-echo "Running in directory: $SCRIPT_DIR"
-cd "$SCRIPT_DIR"
-
 # Export environment for local deployment
 export ENVIRONMENT=local
 

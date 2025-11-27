@@ -6,11 +6,6 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
-
-pushd $SCRIPT_DIR/.. > /dev/null
-
 echo -e "${GREEN}Environment is ready. You can now run tests manually.${NC}"
 echo -e "${YELLOW}To run tests, execute:${NC}"
 echo "  npm test"
@@ -46,5 +41,3 @@ else
 
     echo "=========================================================="
 fi
-
-popd > /dev/null
