@@ -4,49 +4,70 @@ Omnisciens is an intelligent OSINT (Open Source Intelligence) platform that prov
 
 ## Project Structure
 
-The folder `src` contains all the source code including both frontend, backend, and data models.
+The folder structure is organized as follows:
 
 ```bash
-src/
-    crawler/
-        # Crawler documentation
-        README.md
-    frontend/
-        common/
-            # Common frontend code
-        geovision/
-            # Frontend code for geovision
-            ...
-        # the rest of the frontend setup
-        ...
-        # Frontend documentation
-        README.md
-    geovision/
-        # backend code
-        ...
-        # geovision service documentation
-        README.md
-    idl/
-        geovision/
-            # service interfaces
-            ...
-        model/
-            # common data models
-            ...
-        # IDL documentation
-        README.md
+.
+├── .github/workflows/      # CI/CD workflows
+├── deploy/                 # Deployment configurations and scripts
+│   ├── local/              # Local testing environment (Docker Compose)
+│   ├── cloud/              # Cloud deployment (Terraform for Alibaba Cloud)
+│   ├── scripts/            # Deployment and management scripts
+│   └── README.md           # Deployment documentation
+├── src/                    # API tests using pre-generated clients
+├── README.md               # This file
+└── LICENSE                 # License information
 ```
 
-## Infrastructure Setup
+## Services
 
-The project heavily rely on ArangoDB for OSINT data storage and analysis. Frontend is built with React, and backend uses GoLang and Python. gRPC is used to model both the data and each individual micro-service. GeoVision backend is built with Gin. Crawler is based on Scrapy.
+The platform consists of the following microservices:
 
-## Documentation Guidelines
+1. **omniauth** - User authentication and public data access
+2. **omnibasement** - Core data CRUD operations with ArangoDB
+3. **geovision** - Geospatial data operations
 
-Each readme file should cover ONLY these aspects:
-- Project overview stating what the project is about
-- Folder structure that covers what each main folder/file does
-- Infrastructure overview that covers high-level design
-- How to run locally
+## Deployment
 
-Each document should NOT cover any design/implementation details. The code should be self-explanatory.
+### Local Testing
+
+For local testing and development:
+
+```bash
+echo | docker login ghcr.io -u bouncingmaxt --password-stdin
+docker pull --platform <platform> ghcr.io/omnsight/<image>:main
+docker tag ghcr.io/omnsight/<image>:main <image>:latest
+
+docker-compose up -d --wait
+source ./test/setup.sh
+./test/run.sh src/auth.test.ts
+docker-compose down
+
+docker logs <container_name>
+
+docker image prune -a
+```
+
+### Cloud Deployment
+
+For Alibaba Cloud deployment:
+
+```bash
+cd deploy/cloud
+terraform init
+terraform apply
+```
+
+Or use the deployment script:
+
+```bash
+deploy/scripts/deploy-cloud.sh
+```
+
+## Key Features
+
+1. **Multi-environment support** - Run locally for development/testing or deploy to cloud for production
+2. **Cost-effective cloud deployment** - All services on a single ECS instance with RDS for Keycloak
+3. **Security** - Credentials management via Alibaba Cloud Secrets Manager
+4. **Data protection** - Automated backup and restore mechanisms using NAS
+5. **CI/CD** - Automated testing and deployment via GitHub Actions
