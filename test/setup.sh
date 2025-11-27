@@ -16,13 +16,6 @@ cd "$SCRIPT_DIR"
 # Export environment for local deployment
 export ENVIRONMENT=local
 
-# Start services with docker-compose
-echo -e "${GREEN}Starting services with Docker Compose...${NC}"
-docker-compose up -d --wait
-
-echo -e "${GREEN}Services deployed:${NC}"
-docker-compose ps
-
 # Wait for services to be healthy
 echo -e "${YELLOW}Waiting for services to be healthy...${NC}"
 sleep 3

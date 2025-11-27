@@ -38,11 +38,10 @@ echo | docker login ghcr.io -u bouncingmaxt --password-stdin
 docker pull --platform <platform> ghcr.io/omnsight/<image>:main
 docker tag ghcr.io/omnsight/<image>:main <image>:latest
 
+docker-compose up -d --wait
 source ./test/setup.sh
 ./test/run.sh src/auth.test.ts
 docker-compose down
-
-docker-compose up -d --wait
 
 docker logs <container_name>
 
