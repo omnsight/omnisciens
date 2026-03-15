@@ -1,0 +1,29 @@
+{
+  "name": "omnisciens",
+  "version": "0.1.0",
+  "bin": {
+    "omnisciens": "bin/omnisciens.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk",
+    "pull-api": "ts-node lib/merge-apis.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^30",
+    "@types/node": "^24.10.1",
+    "aws-cdk": "2.1110.0",
+    "axios": "^1.13.6",
+    "jest": "^30",
+    "ts-jest": "^29",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.9.3"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.241.0",
+    "axois": "^0.0.1-security",
+    "constructs": "^10.5.0"
+  }
+}
