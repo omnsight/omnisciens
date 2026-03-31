@@ -1,18 +1,6 @@
 import axios from 'axios';
 import fs from 'fs';
-
-interface Service {
-  name: string;
-  port: number;
-  url: string;
-  path: string;
-}
-
-const SERVICES: Service[] = [
-  { name: 'crud', port: 8080, url: 'https://raw.githubusercontent.com/omnsight/omni-osint-crud/main/doc/openapi.json', path: '/osint' },
-  { name: 'query', port: 8081, url: 'https://raw.githubusercontent.com/omnsight/omni-osint-query/main/doc/openapi.json', path: '/query' },
-  { name: 'monitor', port: 8082, url: 'https://raw.githubusercontent.com/omnsight/omni-monitoring/main/doc/openapi.json', path: '/monitoring' }
-];
+import { SERVICES } from '../config';
 
 async function mergeSpecs() {
   const baseSpec: any = {
@@ -30,7 +18,7 @@ async function mergeSpecs() {
 
   for (const service of SERVICES) {
     const { data } = await axios.get(service.url);
-    
+
     // Merge Paths with a prefix to avoid collisions
     Object.keys(data.paths).forEach(path => {
       baseSpec.paths[`${service.path}${path}`] = data.paths[path];
@@ -60,13 +48,22 @@ async function mergeSpecs() {
   Object.keys(baseSpec.paths).forEach(path => {
     const service = SERVICES.find(s => path.startsWith(s.path));
     if (!service) {
-        console.warn(`No service found for path ${path}`);
-        return;
+      console.warn(`No service found for path ${path}`);
+      return;
     }
     const methods = baseSpec.paths[path];
     const originalPath = path.substring(service.path.length);
+
     Object.keys(methods).forEach(method => {
-      methods[method].security = [{ CognitoAuth: [] }];
+      const operation = methods[method];
+
+      // 1. Enforce Cognito only for non-GET endpoints
+      if (method.toLowerCase() !== 'get') {
+        operation.security = [{ CognitoAuth: [] }];
+      } else {
+        delete operation.security;
+      }
+
       methods[method]['x-amazon-apigateway-integration'] = {
         type: 'http_proxy',
         httpMethod: 'ANY',
@@ -74,7 +71,8 @@ async function mergeSpecs() {
         connectionType: 'INTERNET',
         requestParameters: {
           'integration.request.header.x-user-id': 'context.authorizer.claims.sub',
-          'integration.request.header.x-user-email': 'context.authorizer.claims.email'
+          'integration.request.header.x-user-email': 'context.authorizer.claims.email',
+          'integration.request.header.x-user-roles': 'context.authorizer.claims.["cognito:groups"]'
         }
       };
     });

@@ -105,7 +105,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -189,7 +190,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -273,7 +275,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -357,7 +360,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -441,7 +445,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -525,7 +530,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -599,7 +605,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -618,8 +625,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -670,11 +680,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -682,7 +687,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -699,8 +705,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -773,7 +782,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -792,8 +802,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -844,11 +857,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -856,7 +864,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -873,8 +882,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -947,7 +959,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -966,8 +979,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1018,11 +1034,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1030,7 +1041,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -1047,8 +1059,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1121,7 +1136,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -1140,8 +1156,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1192,11 +1211,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1204,7 +1218,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -1221,8 +1236,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1295,7 +1313,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -1314,8 +1333,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1366,11 +1388,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1378,7 +1395,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -1395,8 +1413,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1469,7 +1490,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -1488,8 +1510,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1540,11 +1565,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1552,7 +1572,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -1569,8 +1590,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "include_pending",
@@ -1643,7 +1667,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -1660,8 +1685,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -1712,7 +1740,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -1731,8 +1760,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -1757,30 +1789,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "anyOf": [
-                      {
-                        "$ref": "#/components/schemas/Relation"
-                      },
-                      {
-                        "$ref": "#/components/schemas/Event"
-                      },
-                      {
-                        "$ref": "#/components/schemas/Source"
-                      },
-                      {
-                        "$ref": "#/components/schemas/Person"
-                      },
-                      {
-                        "$ref": "#/components/schemas/Organization"
-                      },
-                      {
-                        "$ref": "#/components/schemas/Website"
-                      }
-                    ]
-                  },
-                  "title": "Response Get View Entities"
+                  "$ref": "#/components/schemas/Entities"
                 }
               }
             }
@@ -1796,11 +1805,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1808,7 +1812,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -1825,8 +1830,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -1889,7 +1897,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -1908,8 +1917,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -1950,11 +1962,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1962,7 +1969,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -1979,8 +1987,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2043,7 +2054,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -2060,8 +2072,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2112,7 +2127,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2128,9 +2144,16 @@
           {
             "name": "text",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "string",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "title": "Text"
             }
           },
@@ -2177,11 +2200,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OsintView"
-                  },
-                  "title": "Response Query Views"
+                  "$ref": "#/components/schemas/QueryViewsResponse"
                 }
               }
             }
@@ -2197,11 +2216,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -2209,7 +2223,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2228,8 +2243,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2292,7 +2310,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2311,8 +2330,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2375,7 +2397,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2394,8 +2417,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2458,7 +2484,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2477,8 +2504,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2541,7 +2571,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2560,8 +2591,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2624,7 +2658,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2643,8 +2678,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2707,90 +2745,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
-          }
-        }
-      }
-    },
-    "/osint/view/{id}/configs": {
-      "post": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Add View Config",
-        "operationId": "add_view_config",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Id"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ViewConfig"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OsintView"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/view/{id}/configs",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2809,8 +2765,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2873,7 +2832,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -2892,8 +2852,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -2944,55 +2907,116 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
     },
-    "/osint/health/osint/crud": {
+    "/query/events": {
       "get": {
-        "tags": [
-          "health"
-        ],
-        "summary": "Health Check",
-        "operationId": "health_check",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthCheck"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/health/osint/crud",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
-          }
-        }
-      }
-    },
-    "/query/query/events": {
-      "post": {
         "tags": [
           "query"
         ],
         "summary": "Query Events",
         "operationId": "query_events",
         "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The search query string.",
+              "title": "Query"
+            },
+            "description": "The search query string."
+          },
+          {
+            "name": "date_start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The start of the date range for the query.",
+              "title": "Date Start"
+            },
+            "description": "The start of the date range for the query."
+          },
+          {
+            "name": "date_end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The end of the date range for the query.",
+              "title": "Date End"
+            },
+            "description": "The end of the date range for the query."
+          },
+          {
+            "name": "country_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The country code to filter the query by.",
+              "title": "Country Code"
+            },
+            "description": "The country code to filter the query by."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "default": 30,
+              "title": "Limit"
+            },
+            "description": "The maximum number of results to return."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The offset from which to start returning results.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "The offset from which to start returning results."
+          },
           {
             "name": "authorization",
             "in": "header",
@@ -3010,16 +3034,6 @@
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/QueryRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -3042,31 +3056,91 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8081/query/events",
+          "uri": "http://${ALB_DNS}:8081/events",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
     },
-    "/query/query/neighbors": {
-      "post": {
+    "/query/entities/{id}/neighbors": {
+      "get": {
         "tags": [
           "query"
         ],
         "summary": "Query Neighbors",
         "operationId": "query_neighbors",
         "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "default": 30,
+              "title": "Limit"
+            },
+            "description": "The maximum number of results to return."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The offset from which to start returning results.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "The offset from which to start returning results."
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to include.",
+              "title": "Include"
+            },
+            "description": "A list of entity types to include."
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to exclude.",
+              "title": "Exclude"
+            },
+            "description": "A list of entity types to exclude."
+          },
           {
             "name": "authorization",
             "in": "header",
@@ -3084,16 +3158,6 @@
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NeighborsRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -3116,91 +3180,142 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8081/query/neighbors",
+          "uri": "http://${ALB_DNS}:8081/entities/{id}/neighbors",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
     },
-    "/query/health/osint/query": {
+    "/query/entities/neighbors": {
       "get": {
         "tags": [
-          "health"
+          "query"
         ],
-        "summary": "Health Check",
-        "operationId": "health_check",
+        "summary": "Query Neighbors Batch",
+        "operationId": "query_neighbors_batch",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 100,
+              "description": "A list of entity IDs to query neighbors for.",
+              "title": "Ids"
+            },
+            "description": "A list of entity IDs to query neighbors for."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "default": 30,
+              "title": "Limit"
+            },
+            "description": "The maximum number of results to return."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The offset from which to start returning results.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "The offset from which to start returning results."
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to include.",
+              "title": "Include"
+            },
+            "description": "A list of entity types to include."
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to exclude.",
+              "title": "Exclude"
+            },
+            "description": "A list of entity types to exclude."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HealthCheck"
+                  "$ref": "#/components/schemas/NeighborsResponse"
                 }
               }
             }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8081/health/osint/query",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
-          }
-        }
-      }
-    },
-    "/monitoring/health/monitoring": {
-      "get": {
-        "tags": [
-          "health"
-        ],
-        "summary": "Health Check",
-        "operationId": "health_check",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
+          },
+          "422": {
+            "description": "Validation Error",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/HealthCheck"
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/health/monitoring",
+          "uri": "http://${ALB_DNS}:8081/entities/neighbors",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -3274,7 +3389,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -3348,11 +3464,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -3360,7 +3471,84 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/monitoring/monitoring-sources/{id}/views": {
+      "get": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Get Monitoring Source Views",
+        "operationId": "get_monitoring_source_views",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OsintView"
+                  },
+                  "title": "Response Get Monitoring Source Views"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -3379,8 +3567,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -3421,11 +3612,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -3433,7 +3619,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -3450,8 +3637,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -3514,7 +3704,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -3531,8 +3722,11 @@
             "required": true,
             "schema": {
               "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
               "title": "Id"
-            }
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
             "name": "authorization",
@@ -3578,7 +3772,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -3652,7 +3847,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -3702,11 +3898,6 @@
             }
           }
         },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -3714,7 +3905,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       },
@@ -3769,7 +3961,8 @@
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email"
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
       }
@@ -3791,6 +3984,60 @@
       }
     },
     "schemas": {
+      "Entities": {
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "type": "array",
+            "title": "Events",
+            "description": "A list of events related to the entity."
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources",
+            "description": "A list of sources related to the entity."
+          },
+          "people": {
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "type": "array",
+            "title": "People",
+            "description": "A list of persons related to the entity."
+          },
+          "organizations": {
+            "items": {
+              "$ref": "#/components/schemas/Organization"
+            },
+            "type": "array",
+            "title": "Organizations",
+            "description": "A list of organizations related to the entity."
+          },
+          "websites": {
+            "items": {
+              "$ref": "#/components/schemas/Website"
+            },
+            "type": "array",
+            "title": "Websites",
+            "description": "A list of websites related to the entity."
+          },
+          "relations": {
+            "items": {
+              "$ref": "#/components/schemas/Relation"
+            },
+            "type": "array",
+            "title": "Relations",
+            "description": "A list of relations related to the entity."
+          }
+        },
+        "type": "object",
+        "title": "Entities"
+      },
       "EntityConnectionRequest": {
         "properties": {
           "entity_id": {
@@ -3810,7 +4057,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -3833,7 +4081,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -3845,7 +4094,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 1000
               },
               {
                 "type": "null"
@@ -3857,7 +4107,8 @@
           "happened_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -3872,7 +4123,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -3885,7 +4137,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -3896,6 +4149,7 @@
           },
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -3904,6 +4158,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -3912,6 +4167,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           },
@@ -3954,7 +4210,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -3966,7 +4223,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -3985,7 +4243,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4008,7 +4267,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4020,7 +4280,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 1000
               },
               {
                 "type": "null"
@@ -4032,7 +4293,8 @@
           "happened_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4047,7 +4309,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -4060,7 +4323,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -4086,20 +4350,6 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "HealthCheck": {
-        "properties": {
-          "status": {
-            "type": "string",
-            "title": "Status",
-            "description": "The health status of the service."
-          }
-        },
-        "type": "object",
-        "required": [
-          "status"
-        ],
-        "title": "HealthCheck"
-      },
       "LocationData": {
         "properties": {
           "latitude": {
@@ -4114,36 +4364,46 @@
           },
           "country_code": {
             "type": "string",
+            "maxLength": 2,
             "title": "Country Code",
             "description": "ISO country code"
           },
           "administrative_area": {
             "type": "string",
+            "maxLength": 100,
             "title": "Administrative Area",
             "description": "Administrative area (e.g., state, province)"
           },
           "sub_administrative_area": {
             "type": "string",
+            "maxLength": 100,
             "title": "Sub Administrative Area",
-            "description": "Sub-administrative area"
+            "description": "Sub-administrative area",
+            "default": ""
           },
           "locality": {
             "type": "string",
+            "maxLength": 100,
             "title": "Locality",
             "description": "Locality (e.g., city, town)"
           },
           "sub_locality": {
             "type": "string",
+            "maxLength": 100,
             "title": "Sub Locality",
-            "description": "Sub-locality"
+            "description": "Sub-locality",
+            "default": ""
           },
           "address": {
             "type": "string",
+            "maxLength": 200,
             "title": "Address",
             "description": "Full address"
           },
           "postal_code": {
             "type": "integer",
+            "maximum": 9999999999,
+            "minimum": 0,
             "title": "Postal Code",
             "description": "Postal code"
           }
@@ -4154,9 +4414,7 @@
           "longitude",
           "country_code",
           "administrative_area",
-          "sub_administrative_area",
           "locality",
-          "sub_locality",
           "address",
           "postal_code"
         ],
@@ -4168,7 +4426,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4180,7 +4439,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4192,7 +4452,8 @@
           "founded_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4204,7 +4465,8 @@
           "discovered_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4216,7 +4478,8 @@
           "last_visited": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4231,7 +4494,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -4244,7 +4508,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -4255,6 +4520,7 @@
           },
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -4263,6 +4529,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -4271,6 +4538,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           },
@@ -4313,7 +4581,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4325,7 +4594,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4344,7 +4614,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4356,7 +4627,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4368,7 +4640,8 @@
           "founded_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4380,7 +4653,8 @@
           "discovered_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4392,7 +4666,8 @@
           "last_visited": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4407,7 +4682,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -4420,7 +4696,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -4437,6 +4714,7 @@
         "properties": {
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -4445,6 +4723,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -4453,6 +4732,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           },
@@ -4495,7 +4775,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4507,7 +4788,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4519,7 +4801,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4531,7 +4814,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -4540,20 +4824,22 @@
             "title": "Description",
             "description": "Description of the view"
           },
-          "configs": {
+          "analysis": {
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/ViewConfig"
+                  "additionalProperties": true,
+                  "type": "object"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 5000
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Configs",
-            "description": "List of view configurations"
+            "title": "Analysis",
+            "description": "Json based analysis report doc"
           }
         },
         "type": "object",
@@ -4564,7 +4850,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4576,7 +4863,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -4585,20 +4873,22 @@
             "title": "Description",
             "description": "Description of the view"
           },
-          "configs": {
+          "analysis": {
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/ViewConfig"
+                  "additionalProperties": true,
+                  "type": "object"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 5000
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Configs",
-            "description": "List of view configurations"
+            "title": "Analysis",
+            "description": "Json based analysis report doc"
           }
         },
         "type": "object",
@@ -4608,6 +4898,7 @@
         "properties": {
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -4616,6 +4907,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -4624,6 +4916,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           }
@@ -4634,10 +4927,24 @@
       },
       "Person": {
         "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Role type of person"
+          },
           "role": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4649,7 +4956,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4661,7 +4969,8 @@
           "nationality": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4673,7 +4982,8 @@
           "birth_date": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4688,7 +4998,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -4703,7 +5014,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -4716,7 +5028,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -4727,6 +5040,7 @@
           },
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -4735,6 +5049,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -4743,6 +5058,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           },
@@ -4785,7 +5101,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4797,7 +5114,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4813,10 +5131,24 @@
       },
       "PersonMainData": {
         "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Role type of person"
+          },
           "role": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4828,7 +5160,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4840,7 +5173,8 @@
           "nationality": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4852,7 +5186,8 @@
           "birth_date": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4867,7 +5202,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -4882,7 +5218,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -4895,7 +5232,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -4908,12 +5246,33 @@
         "type": "object",
         "title": "PersonMainData"
       },
+      "QueryViewsResponse": {
+        "properties": {
+          "views": {
+            "items": {
+              "$ref": "#/components/schemas/OsintView"
+            },
+            "type": "array",
+            "title": "Views",
+            "description": "A list of views"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset",
+            "description": "The offset from which to start returning results.",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "QueryViewsResponse"
+      },
       "Relation": {
         "properties": {
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4925,7 +5284,9 @@
           "confidence": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -4937,7 +5298,8 @@
           "label": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4950,7 +5312,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -4962,7 +5325,8 @@
           "_from": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4974,7 +5338,8 @@
           "_to": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -4985,6 +5350,7 @@
           },
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -4993,6 +5359,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -5001,6 +5368,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           },
@@ -5043,7 +5411,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5055,7 +5424,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5074,7 +5444,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5086,7 +5457,9 @@
           "confidence": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5098,7 +5471,8 @@
           "label": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5111,7 +5485,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -5123,7 +5498,8 @@
           "_from": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5135,7 +5511,8 @@
           "_to": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5153,7 +5530,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5165,7 +5543,8 @@
           "url": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -5177,7 +5556,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5189,7 +5569,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5201,7 +5582,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 1000
               },
               {
                 "type": "null"
@@ -5213,7 +5595,9 @@
           "reliability": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5228,7 +5612,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -5241,7 +5626,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -5252,6 +5638,7 @@
           },
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -5260,6 +5647,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -5268,6 +5656,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           },
@@ -5310,7 +5699,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5322,7 +5712,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5341,7 +5732,8 @@
           "type": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5353,7 +5745,8 @@
           "url": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -5365,7 +5758,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5377,7 +5771,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5389,7 +5784,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 1000
               },
               {
                 "type": "null"
@@ -5401,7 +5797,9 @@
           "reliability": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5416,7 +5814,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -5429,7 +5828,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -5482,56 +5882,26 @@
         ],
         "title": "ValidationError"
       },
-      "ViewConfig": {
-        "properties": {
-          "ui": {
-            "$ref": "#/components/schemas/ViewUI",
-            "description": "UI type for the view"
-          },
-          "mode": {
-            "$ref": "#/components/schemas/ViewMode",
-            "description": "Mode of the view"
-          },
-          "entities": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Entities",
-            "description": "List of entity ids this view config highlights. For example, compare mode will render these entities in parallel highlighting their differences."
-          }
-        },
-        "type": "object",
-        "required": [
-          "ui",
-          "mode",
-          "entities"
-        ],
-        "title": "ViewConfig"
-      },
-      "ViewMode": {
-        "type": "string",
-        "enum": [
-          "default",
-          "timeline",
-          "compare"
-        ],
-        "title": "ViewMode"
-      },
-      "ViewUI": {
-        "type": "string",
-        "enum": [
-          "Geovision",
-          "Sparkle"
-        ],
-        "title": "ViewUI"
-      },
       "Website": {
         "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of website"
+          },
           "url": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -5543,7 +5913,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5555,7 +5926,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 1000
               },
               {
                 "type": "null"
@@ -5567,7 +5939,8 @@
           "founded_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5579,7 +5952,8 @@
           "discovered_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5591,7 +5965,8 @@
           "last_visited": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5606,7 +5981,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -5619,7 +5995,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -5630,6 +6007,7 @@
           },
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Owner of the document"
           },
@@ -5638,6 +6016,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Read",
             "description": "Users/Roles with read access"
           },
@@ -5646,6 +6025,7 @@
               "type": "string"
             },
             "type": "array",
+            "maxItems": 100,
             "title": "Write",
             "description": "Users/Roles with write access"
           },
@@ -5688,7 +6068,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5700,7 +6081,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5716,10 +6098,24 @@
       },
       "WebsiteMainData": {
         "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of website"
+          },
           "url": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -5731,7 +6127,8 @@
           "title": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -5743,7 +6140,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 1000
               },
               {
                 "type": "null"
@@ -5755,7 +6153,8 @@
           "founded_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5767,7 +6166,8 @@
           "discovered_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5779,7 +6179,8 @@
           "last_visited": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -5794,7 +6195,8 @@
                 "items": {
                   "type": "string"
                 },
-                "type": "array"
+                "type": "array",
+                "maxItems": 100
               },
               {
                 "type": "null"
@@ -5807,7 +6209,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -5819,20 +6222,6 @@
         },
         "type": "object",
         "title": "WebsiteMainData"
-      },
-      "NeighborsRequest": {
-        "properties": {
-          "entity_id": {
-            "type": "string",
-            "title": "Entity Id",
-            "description": "The ID of the entity to query for neighbors."
-          }
-        },
-        "type": "object",
-        "required": [
-          "entity_id"
-        ],
-        "title": "NeighborsRequest"
       },
       "NeighborsResponse": {
         "properties": {
@@ -5884,12 +6273,6 @@
             "title": "Relations",
             "description": "A list of relations related to the entity."
           },
-          "limit": {
-            "type": "integer",
-            "title": "Limit",
-            "description": "The maximum number of results to return.",
-            "default": 30
-          },
           "offset": {
             "type": "integer",
             "title": "Offset",
@@ -5899,72 +6282,6 @@
         },
         "type": "object",
         "title": "NeighborsResponse"
-      },
-      "QueryRequest": {
-        "properties": {
-          "query": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Query",
-            "description": "The search query string."
-          },
-          "date_start": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Date Start",
-            "description": "The start of the date range for the query."
-          },
-          "date_end": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Date End",
-            "description": "The end of the date range for the query."
-          },
-          "country_code": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Country Code",
-            "description": "The country code to filter the query by."
-          },
-          "limit": {
-            "type": "integer",
-            "title": "Limit",
-            "description": "The maximum number of results to return.",
-            "default": 30
-          },
-          "offset": {
-            "type": "integer",
-            "title": "Offset",
-            "description": "The offset from which to start returning results.",
-            "default": 0
-          }
-        },
-        "type": "object",
-        "title": "QueryRequest"
       },
       "QueryResponse": {
         "properties": {
@@ -5983,6 +6300,12 @@
             "type": "array",
             "title": "Relations",
             "description": "A list of relations that match the query."
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset",
+            "description": "The offset from which to start returning results.",
+            "default": 0
           }
         },
         "type": "object",
@@ -5992,11 +6315,13 @@
         "properties": {
           "language": {
             "type": "string",
+            "maxLength": 10,
             "title": "Language",
             "description": "The language that workflow generates data in by the trigger"
           },
           "user_id": {
             "type": "string",
+            "maxLength": 100,
             "title": "User Id",
             "description": "ID of user who created the trigger"
           }
@@ -6013,6 +6338,7 @@
         "properties": {
           "language": {
             "type": "string",
+            "maxLength": 10,
             "title": "Language",
             "description": "The language that workflow generates data in by the trigger"
           }
@@ -6029,7 +6355,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -6041,7 +6368,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -6053,7 +6381,8 @@
           "type": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/SourceType"
+                "$ref": "#/components/schemas/SourceType",
+                "maxLength": 30
               },
               {
                 "type": "null"
@@ -6064,7 +6393,8 @@
           "url": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -6076,7 +6406,9 @@
           "reliability": {
             "anyOf": [
               {
-                "type": "number"
+                "type": "number",
+                "maximum": 100,
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -6088,7 +6420,8 @@
           "last_reviewed": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -6101,7 +6434,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
@@ -6149,7 +6483,8 @@
           "created_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -6161,7 +6496,8 @@
           "updated_at": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -6172,6 +6508,7 @@
           },
           "owner": {
             "type": "string",
+            "maxLength": 100,
             "title": "Owner",
             "description": "Identify the user the monitoring source belongs to"
           }
@@ -6187,7 +6524,8 @@
           "name": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 100
               },
               {
                 "type": "null"
@@ -6199,7 +6537,8 @@
           "description": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -6211,7 +6550,8 @@
           "type": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/SourceType"
+                "$ref": "#/components/schemas/SourceType",
+                "maxLength": 30
               },
               {
                 "type": "null"
@@ -6222,7 +6562,8 @@
           "url": {
             "anyOf": [
               {
-                "type": "string"
+                "type": "string",
+                "maxLength": 200
               },
               {
                 "type": "null"
@@ -6234,7 +6575,9 @@
           "reliability": {
             "anyOf": [
               {
-                "type": "number"
+                "type": "number",
+                "maximum": 100,
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -6246,7 +6589,8 @@
           "last_reviewed": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               },
               {
                 "type": "null"
@@ -6259,7 +6603,8 @@
             "anyOf": [
               {
                 "additionalProperties": true,
-                "type": "object"
+                "type": "object",
+                "maxProperties": 50
               },
               {
                 "type": "null"
