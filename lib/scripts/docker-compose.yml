@@ -26,6 +26,7 @@ services:
       - /home/ec2-user/.env
 
   crud:
+    container_name: omni-osint-crud
     image: ghcr.io/omnsight/omni-osint-crud:latest
     command: uvicorn omni_osint_crud.main:app --host 0.0.0.0 --port 8080
     ports:
@@ -53,6 +54,7 @@ services:
         awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
 
   query:
+    container_name: omni-osint-query
     image: ghcr.io/omnsight/omni-osint-query:latest
     command: uvicorn omni_osint_query.main:app --host 0.0.0.0 --port 8080
     ports:
@@ -80,6 +82,7 @@ services:
         awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
 
   monitoring:
+    container_name: omni-monitoring
     image: ghcr.io/omnsight/omni-monitoring:latest
     command: uvicorn omni_monitoring.main:app --host 0.0.0.0 --port 8080
     ports:
@@ -107,8 +110,8 @@ services:
         awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
 
   health-check-proxy:
-    image: python:3.11-alpine
     container_name: health-aggregator
+    image: python:3.11-alpine
     ports:
       - "8888:8888" # The ALB will ping this port
     command:

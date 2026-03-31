@@ -111,3 +111,10 @@ cloud-init analyze show
 ```
 
 Check system log from AWS console: EC2 > Instances > [Your Instance] > Actions > Monitor and troubleshoot > Get system log.
+
+Investigate docker containers:
+
+```bash
+sudo docker ps -a
+sudo docker logs <container name>
+```

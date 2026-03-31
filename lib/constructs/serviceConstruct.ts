@@ -28,7 +28,7 @@ export class ServiceConstruct extends Construct {
 
     this.logGroup = new LogGroup(this, `NexusLogs-${stage}`, {
       logGroupName: `/aws/ec2/nexus-osint-${stage}`,
-      retention: RetentionDays.THREE_MONTHS,
+      retention: stage === "prod" ? RetentionDays.THREE_MONTHS : RetentionDays.ONE_DAY,
       removalPolicy: RemovalPolicy.DESTROY,
     });
 

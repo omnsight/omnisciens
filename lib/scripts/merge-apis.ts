@@ -16,21 +16,6 @@ async function mergeSpecs() {
     components: { securitySchemes: {}, schemas: {} }
   };
 
-  for (const service of SERVICES) {
-    const { data } = await axios.get(service.url);
-
-    // Merge Paths with a prefix to avoid collisions
-    Object.keys(data.paths).forEach(path => {
-      baseSpec.paths[`${service.path}${path}`] = data.paths[path];
-    });
-
-    // Merge Schemas
-    if (data.components?.schemas) {
-      Object.assign(baseSpec.components.schemas, data.components.schemas);
-    }
-  }
-
-  // Inject Cognito Security Scheme (The "Integration" part)
   baseSpec.components.securitySchemes = {
     CognitoAuth: {
       type: 'apiKey',
@@ -41,42 +26,42 @@ async function mergeSpecs() {
         type: 'cognito_user_pools',
         providerARNs: ['${COGNITO_USER_POOL_ARN}']
       }
-    },
+    }
   };
 
-  // Apply security and Proxy integration to all paths
-  Object.keys(baseSpec.paths).forEach(path => {
-    const service = SERVICES.find(s => path.startsWith(s.path));
-    if (!service) {
-      console.warn(`No service found for path ${path}`);
-      return;
-    }
-    const methods = baseSpec.paths[path];
-    const originalPath = path.substring(service.path.length);
+  for (const service of SERVICES) {
+    const { data } = await axios.get(service.url);
 
-    Object.keys(methods).forEach(method => {
-      const operation = methods[method];
+    Object.keys(data.paths).forEach(path => {
+      const methods = data.paths[path];
+      Object.keys(methods).forEach(method => {
+        const operation = methods[method];
 
-      // 1. Enforce Cognito only for non-GET endpoints
-      if (method.toLowerCase() !== 'get') {
-        operation.security = [{ CognitoAuth: [] }];
-      } else {
-        delete operation.security;
-      }
-
-      methods[method]['x-amazon-apigateway-integration'] = {
-        type: 'http_proxy',
-        httpMethod: 'ANY',
-        uri: `http://\${ALB_DNS}:${service.port}${originalPath}`,
-        connectionType: 'INTERNET',
-        requestParameters: {
-          'integration.request.header.x-user-id': 'context.authorizer.claims.sub',
-          'integration.request.header.x-user-email': 'context.authorizer.claims.email',
-          'integration.request.header.x-user-roles': 'context.authorizer.claims.["cognito:groups"]'
+        if (method.toLowerCase() !== 'get') {
+          operation.security = [{ CognitoAuth: [] }];
+        } else {
+          delete operation.security;
         }
-      };
+
+        methods[method]['x-amazon-apigateway-integration'] = {
+          type: 'http_proxy',
+          httpMethod: 'ANY',
+          uri: `http://\${ALB_DNS}:${service.port}${path}`,
+          connectionType: 'INTERNET',
+          requestParameters: {
+            'integration.request.header.x-user-id': 'context.authorizer.claims.sub',
+            'integration.request.header.x-user-email': 'context.authorizer.claims.email',
+            'integration.request.header.x-user-roles': 'context.authorizer.claims.["cognito:groups"]'
+          }
+        };
+      });
+      baseSpec.paths[path] = methods;
     });
-  });
+
+    if (data.components?.schemas) {
+      Object.assign(baseSpec.components.schemas, data.components.schemas);
+    }
+  }
 
   fs.writeFileSync('./combined-spec.json', JSON.stringify(baseSpec, null, 2));
 }

@@ -11,20 +11,21 @@ export class NexuIntelStack extends Stack {
   constructor(scope: App, id: string, props: NexusrIntelStackProps) {
     super(scope, id, props);
 
-    const service = new ServiceConstruct(this, 'Service', { stage: props.stage });
-    const api = new ApiConstruct(this, 'Api', { 
+    const serviceConstruct = new ServiceConstruct(this, 'Service', { stage: props.stage });
+    const apiConstruct = new ApiConstruct(this, 'Api', { 
       stage: props.stage, 
-      vpc: service.vpc, 
-      asg: service.asg 
+      vpc: serviceConstruct.vpc, 
+      asg: serviceConstruct.asg 
     });
     new MonitoringConstruct(this, 'Monitoring', { 
       stage: props.stage, 
-      api: api.api, 
-      asg: service.asg, 
-      userPool: api.userPool, 
-      postConfirmTriggerLogGroup: api.postConfirmTriggerLogGroup,
-      serviceLogGroup: service.logGroup, 
-      dataVolume: service.dataVolume,
+      api: apiConstruct.api, 
+      asg: serviceConstruct.asg, 
+      userPool: apiConstruct.userPool, 
+      postConfirmTriggerLogGroup: apiConstruct.postConfirmTriggerLogGroup,
+      serviceLogGroup: serviceConstruct.logGroup, 
+      dataVolume: serviceConstruct.dataVolume,
+      targetGroups: apiConstruct.targetGroups,
     });
   }
 }

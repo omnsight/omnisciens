@@ -1,10 +1,10 @@
 import { Duration, RemovalPolicy, Stack } from 'aws-cdk-lib';
-import { ApiDefinition, BasePathMapping, DomainName, EndpointType, SecurityPolicy, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { AccessLogFormat, ApiDefinition, BasePathMapping, DomainName, EndpointType, LogGroupLogDestination, SecurityPolicy, SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { Certificate } from 'aws-cdk-lib/aws-certificatemanager';
 import { CfnUserPoolGroup, UserPool } from 'aws-cdk-lib/aws-cognito';
 import { AutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
 import { Port, Vpc } from 'aws-cdk-lib/aws-ec2';
-import { ApplicationLoadBalancer, ApplicationProtocol, Protocol } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+import { ApplicationLoadBalancer, ApplicationProtocol, ApplicationTargetGroup, Protocol } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import { AnyPrincipal, Effect, PolicyDocument, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
@@ -22,6 +22,9 @@ export class ApiConstruct extends Construct {
   public readonly api: SpecRestApi;
   public readonly userPool: UserPool;
   public readonly postConfirmTriggerLogGroup: LogGroup;
+  public readonly accessLogGroup: LogGroup;
+  public readonly executionLogGroup: LogGroup;
+  public readonly targetGroups: { [name: string]: ApplicationTargetGroup } = {};
 
   constructor(scope: Construct, id: string, props: ApiConstructProps) {
     super(scope, id);
@@ -39,7 +42,7 @@ export class ApiConstruct extends Construct {
 
     const logGroup = new LogGroup(this, `NexusUserRegisterLambdaLogs-${stage}`, {
       logGroupName: `/aws/lambda/nexus-user-register-${stage}`,
-      retention: RetentionDays.THREE_MONTHS,
+      retention: stage === "prod" ? RetentionDays.THREE_MONTHS : RetentionDays.ONE_DAY,
       removalPolicy: RemovalPolicy.DESTROY,
     });
     const postConfirmTrigger = new Function(this, 'PostConfirmLambda', {
@@ -86,7 +89,7 @@ export class ApiConstruct extends Construct {
         port: svc.port,
         protocol: ApplicationProtocol.HTTP,
       });
-      listener.addTargets(`Target-${svc.name}-${stage}`, {
+      const targetGroup = listener.addTargets(`Target-${svc.name}-${stage}`, {
         port: svc.port,
         protocol: ApplicationProtocol.HTTP,
         targets: [asg],
@@ -98,6 +101,7 @@ export class ApiConstruct extends Construct {
           timeout: Duration.seconds(5),
         },
       });
+      this.targetGroups[svc.name] = targetGroup;
       asg.connections.allowFrom(alb, Port.tcp(svc.port));
     });
     asg.connections.allowFrom(alb, Port.tcp(8888));
@@ -128,10 +132,21 @@ export class ApiConstruct extends Construct {
       ]
     });
 
+    this.accessLogGroup = new LogGroup(this, `ApiAccessLogs-${stage}`, {
+      retention: stage === "prod" ? RetentionDays.THREE_MONTHS : RetentionDays.ONE_DAY,
+      removalPolicy: RemovalPolicy.DESTROY, // Optional: Deletes log group when stack is deleted
+    });
     this.api = new SpecRestApi(this, 'NexusApiGateway', {
       restApiName: 'nexus-api',
       apiDefinition: ApiDefinition.fromInline(JSON.parse(finalSpec)),
-      deployOptions: { stageName: stage },
+      cloudWatchRole: true,
+      deployOptions: {
+        stageName: stage,
+        metricsEnabled: false,
+        dataTraceEnabled: false,
+        accessLogDestination: new LogGroupLogDestination(this.accessLogGroup),
+        accessLogFormat: AccessLogFormat.jsonWithStandardFields(),
+      },
       disableExecuteApiEndpoint: true,
       policy: apiPolicy,
     });

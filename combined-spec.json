@@ -26,7 +26,7 @@
     "maxAge": 600
   },
   "paths": {
-    "/osint/person": {
+    "/person": {
       "post": {
         "tags": [
           "create"
@@ -111,7 +111,7 @@
         }
       }
     },
-    "/osint/organization": {
+    "/organization": {
       "post": {
         "tags": [
           "create"
@@ -196,7 +196,7 @@
         }
       }
     },
-    "/osint/event": {
+    "/event": {
       "post": {
         "tags": [
           "create"
@@ -281,7 +281,7 @@
         }
       }
     },
-    "/osint/website": {
+    "/website": {
       "post": {
         "tags": [
           "create"
@@ -366,7 +366,7 @@
         }
       }
     },
-    "/osint/source": {
+    "/source": {
       "post": {
         "tags": [
           "create"
@@ -451,7 +451,7 @@
         }
       }
     },
-    "/osint/relation": {
+    "/relation": {
       "post": {
         "tags": [
           "create"
@@ -536,7 +536,7 @@
         }
       }
     },
-    "/osint/view": {
+    "/view": {
       "post": {
         "tags": [
           "create"
@@ -611,7 +611,7 @@
         }
       }
     },
-    "/osint/person/{id}": {
+    "/person/{id}": {
       "get": {
         "tags": [
           "read"
@@ -788,7 +788,7 @@
         }
       }
     },
-    "/osint/organization/{id}": {
+    "/organization/{id}": {
       "get": {
         "tags": [
           "read"
@@ -965,7 +965,7 @@
         }
       }
     },
-    "/osint/event/{id}": {
+    "/event/{id}": {
       "get": {
         "tags": [
           "read"
@@ -1142,7 +1142,7 @@
         }
       }
     },
-    "/osint/website/{id}": {
+    "/website/{id}": {
       "get": {
         "tags": [
           "read"
@@ -1319,7 +1319,7 @@
         }
       }
     },
-    "/osint/source/{id}": {
+    "/source/{id}": {
       "get": {
         "tags": [
           "read"
@@ -1496,7 +1496,7 @@
         }
       }
     },
-    "/osint/relation/{id}": {
+    "/relation/{id}": {
       "get": {
         "tags": [
           "read"
@@ -1746,7 +1746,7 @@
         }
       }
     },
-    "/osint/view/{id}/entities": {
+    "/view/{id}/entities": {
       "get": {
         "tags": [
           "read"
@@ -1903,7 +1903,7 @@
         }
       }
     },
-    "/osint/view/{id}": {
+    "/view/{id}": {
       "get": {
         "tags": [
           "read"
@@ -2133,7 +2133,7 @@
         }
       }
     },
-    "/osint/views": {
+    "/views": {
       "get": {
         "tags": [
           "read"
@@ -2229,7 +2229,7 @@
         }
       }
     },
-    "/osint/person/{id}/permissions": {
+    "/person/{id}/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2316,7 +2316,7 @@
         }
       }
     },
-    "/osint/organization/{id}/permissions": {
+    "/organization/{id}/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2403,7 +2403,7 @@
         }
       }
     },
-    "/osint/event/{id}/permissions": {
+    "/event/{id}/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2490,7 +2490,7 @@
         }
       }
     },
-    "/osint/website/{id}/permissions": {
+    "/website/{id}/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2577,7 +2577,7 @@
         }
       }
     },
-    "/osint/source/{id}/permissions": {
+    "/source/{id}/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2664,7 +2664,7 @@
         }
       }
     },
-    "/osint/relation/{id}/permissions": {
+    "/relation/{id}/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2751,7 +2751,7 @@
         }
       }
     },
-    "/osint/view/{id}/permissions": {
+    "/view/{id}/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2838,7 +2838,7 @@
         }
       }
     },
-    "/osint/entity/{id}": {
+    "/entity/{id}": {
       "delete": {
         "tags": [
           "delete"
@@ -2913,7 +2913,7 @@
         }
       }
     },
-    "/query/events": {
+    "/events": {
       "get": {
         "tags": [
           "query"
@@ -3069,7 +3069,7 @@
         }
       }
     },
-    "/query/entities/{id}/neighbors": {
+    "/entities/{id}/neighbors": {
       "get": {
         "tags": [
           "query"
@@ -3193,7 +3193,7 @@
         }
       }
     },
-    "/query/entities/neighbors": {
+    "/entities/neighbors": {
       "get": {
         "tags": [
           "query"
@@ -3320,7 +3320,7 @@
         }
       }
     },
-    "/monitoring/monitoring-sources": {
+    "/monitoring-sources": {
       "post": {
         "tags": [
           "Monitoring Sources"
@@ -3477,7 +3477,7 @@
         }
       }
     },
-    "/monitoring/monitoring-sources/{id}/views": {
+    "/monitoring-sources/{id}/views": {
       "get": {
         "tags": [
           "Monitoring Sources"
@@ -3553,7 +3553,7 @@
         }
       }
     },
-    "/monitoring/monitoring-sources/{id}": {
+    "/monitoring-sources/{id}": {
       "get": {
         "tags": [
           "Monitoring Sources"
@@ -3778,7 +3778,7 @@
         }
       }
     },
-    "/monitoring/monitor-triggers": {
+    "/monitor-triggers": {
       "post": {
         "tags": [
           "Monitor Triggers"

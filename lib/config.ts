@@ -12,6 +12,7 @@ export const SERVICES: Service[] = [
 ];
 
 export const SERVICE_CONFIG = {
+  IS_LOCAL: "false",
   ARANGODB_HOST: "http://arangodb:8529",
   ARANGODB_USERNAME: "root",
   ARANGODB_DB_NAME: "test_osint_db",
@@ -25,5 +26,6 @@ export const SERVICE_CONFIG = {
 export function toEnvFormat(config: Record<string, string>): string {
   return Object.entries(config)
     .map(([key, value]) => `${key}=${value}`)
-    .join('\n');
+    .join('\n')
+    .concat('\n');
 }
