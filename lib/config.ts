@@ -15,7 +15,7 @@ export const SERVICE_CONFIG = {
   IS_LOCAL: "false",
   ARANGODB_HOST: "http://arangodb:8529",
   ARANGODB_USERNAME: "root",
-  ARANGODB_DB_NAME: "test_osint_db",
+  ARANGODB_DB_NAME: "nexus_db",
   ARANGODB_EMBEDDING_DIMENSION: "2048",
   EMBEDDING_UPDATE_DAYS: "7",
   EMBEDDING_MODEL: "Qwen/Qwen3-Embedding-4B",

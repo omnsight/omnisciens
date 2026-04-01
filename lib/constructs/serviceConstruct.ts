@@ -129,16 +129,6 @@ export class ServiceConstruct extends Construct {
               GH_TOKEN=$(aws secretsmanager get-secret-value --secret-id ${patSecret.secretArn} --query SecretString --output text) 
               echo $GH_TOKEN | docker login ghcr.io -u bouncingmaxt --password-stdin
 
-              AI_KEYS=$(aws secretsmanager get-secret-value --secret-id ${embeddingSecret.secretArn} --query SecretString --output text)
-              echo "EMBEDDING_AI_API_KEY=$(echo $AI_KEYS | jq -r .API_KEY)" >> /home/ec2-user/.env
-              echo "EMBEDDING_AI_API_BASE_URL=$(echo $AI_KEYS | jq -r .BASE_URL)" >> /home/ec2-user/.env
-              echo "Set up embedding env variabls. Base URL: $(echo $AI_KEYS | jq -r .BASE_URL)"
-
-              REDIS_PWD=$(aws secretsmanager get-secret-value --secret-id ${redisSecret.secretArn} --query SecretString --output text)
-              ARANGO_PWD=$(aws secretsmanager get-secret-value --secret-id ${arangoSecret.secretArn} --query SecretString --output text)
-              echo "REDIS_PASSWORD=$REDIS_PWD" >> /home/ec2-user/.env
-              echo "ARANGODB_PASSWORD=$ARANGO_PWD" >> /home/ec2-user/.env
-              echo "ARANGO_ROOT_PASSWORD=$ARANGO_PWD" >> /home/ec2-user/.env
               echo "Set up ArangoDB and Redis passwords."
             `),
           ]),
@@ -147,11 +137,23 @@ export class ServiceConstruct extends Construct {
             InitCommand.shellCommand('echo "---------------Starting Up Services---------------"'),
             InitFile.fromString(
               '/home/ec2-user/docker-compose.yml',
-              fs.readFileSync('lib/scripts/docker-compose.yml', 'utf8')
-                .replace(/\${AWS_REGION}/g, stack.region)
-                .replace(/\${AWS_LOG_GROUP}/g, this.logGroup.logGroupName)
+              fs.readFileSync('lib/scripts/docker-compose.yml', 'utf8'),
             ),
-            InitCommand.shellCommand('docker compose -f /home/ec2-user/docker-compose.yml up -d'),
+            InitCommand.shellCommand(`
+              AI_KEYS=$(aws secretsmanager get-secret-value --secret-id ${embeddingSecret.secretArn} --query SecretString --output text)
+              ARANGO_PWD=$(aws secretsmanager get-secret-value --secret-id ${arangoSecret.secretArn} --query SecretString --output text)
+
+              export AWS_REGION=${stack.region}
+              export AWS_LOG_GROUP=${this.logGroup.logGroupName}
+              export CURRENT_DATE=$(date +%Y-%m-%d)
+
+              EMBEDDING_AI_API_KEY=$(echo $AI_KEYS | jq -r .API_KEY) \
+              EMBEDDING_AI_API_BASE_URL=$(echo $AI_KEYS | jq -r .BASE_URL) \
+              REDIS_PASSWORD=$(aws secretsmanager get-secret-value --secret-id ${redisSecret.secretArn} --query SecretString --output text) \
+              ARANGODB_PASSWORD=$ARANGO_PWD \
+              ARANGO_ROOT_PASSWORD=$ARANGO_PWD \
+              docker compose -f /home/ec2-user/docker-compose.yml up -d
+            `),
           ]),
         },
       }),
