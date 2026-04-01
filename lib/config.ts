@@ -13,6 +13,7 @@ export const SERVICES: Service[] = [
 
 export const SERVICE_CONFIG = {
   IS_LOCAL: "false",
+  ALLOWED_ORIGINS: "https://nexusintelligences.com",
   ARANGODB_HOST: "http://arangodb:8529",
   ARANGODB_USERNAME: "root",
   ARANGODB_DB_NAME: "nexus_db",

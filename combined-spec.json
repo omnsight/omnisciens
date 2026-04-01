@@ -109,6 +109,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/person",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/organization": {
@@ -183,6 +202,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organization",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -279,6 +317,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/event",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/website": {
@@ -353,6 +410,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/website",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -449,6 +525,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/source",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/relation": {
@@ -534,6 +629,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/view": {
@@ -598,6 +712,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -786,6 +919,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/person/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/organization/{id}": {
@@ -952,6 +1104,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organization/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1140,6 +1311,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/event/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/website/{id}": {
@@ -1317,6 +1507,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/website/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/source/{id}": {
@@ -1483,6 +1692,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/source/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -1744,6 +1972,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/view/{id}/entities": {
@@ -1890,6 +2137,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}/entities",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -2131,6 +2397,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/views": {
@@ -2214,6 +2499,25 @@
                 }
               }
             }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
           }
         },
         "x-amazon-apigateway-integration": {
@@ -2314,6 +2618,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/person/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/organization/{id}/permissions": {
@@ -2390,6 +2713,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organization/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -2488,6 +2830,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/event/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/website/{id}/permissions": {
@@ -2564,6 +2925,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/website/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -2662,6 +3042,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/source/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/relation/{id}/permissions": {
@@ -2738,6 +3137,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -2836,6 +3254,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/entity/{id}": {
@@ -2900,6 +3337,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/entity/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
@@ -3067,6 +3523,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/events",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/entities/{id}/neighbors": {
@@ -3178,6 +3653,25 @@
                 }
               }
             }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/entities/{id}/neighbors",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
           }
         },
         "x-amazon-apigateway-integration": {
@@ -3305,6 +3799,25 @@
                 }
               }
             }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/entities/neighbors",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
           }
         },
         "x-amazon-apigateway-integration": {
@@ -3475,6 +3988,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/monitoring-sources/{id}/views": {
@@ -3538,6 +4070,25 @@
                 }
               }
             }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
           }
         },
         "x-amazon-apigateway-integration": {
@@ -3776,6 +4327,25 @@
             "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
           }
         }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
       }
     },
     "/monitor-triggers": {
@@ -3954,6 +4524,25 @@
             "CognitoAuth": []
           }
         ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitor-triggers",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",

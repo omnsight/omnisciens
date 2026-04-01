@@ -34,10 +34,21 @@ async function mergeSpecs() {
 
     Object.keys(data.paths).forEach(path => {
       const methods = data.paths[path];
+      if (!methods['options']) {
+        methods['options'] = {
+          summary: "CORS preflight",
+          responses: {
+            200: { description: "Default response for CORS method" }
+          }
+        };
+      }
+
       Object.keys(methods).forEach(method => {
         const operation = methods[method];
+        const isOptions = method.toLowerCase() === 'options';
+        const isGet = method.toLowerCase() === 'get';
 
-        if (method.toLowerCase() !== 'get') {
+        if (!isOptions && !isGet) {
           operation.security = [{ CognitoAuth: [] }];
         } else {
           delete operation.security;

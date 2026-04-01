@@ -75,7 +75,7 @@ export class ApiConstruct extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
     });
     new CfnUserPoolGroup(this, `AdminGroup-${stage}`, { userPoolId: this.userPool.userPoolId, groupName: 'admin' });
-    new CfnUserPoolGroup(this, `PaidGroup-${stage}`, { userPoolId: this.userPool.userPoolId, groupName: 'paid' });
+    new CfnUserPoolGroup(this, `ProGroup-${stage}`, { userPoolId: this.userPool.userPoolId, groupName: 'pro' });
     new CfnUserPoolGroup(this, `UserGroup-${stage}`, { userPoolId: this.userPool.userPoolId, groupName: 'user' });
 
     postConfirmTrigger.addToRolePolicy(new PolicyStatement({
