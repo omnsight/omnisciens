@@ -1,0 +1,143 @@
+services:
+  arangodb:
+    image: arangodb/arangodb:3.12
+    command: arangod --experimental-vector-index
+    ports:
+      - "8529:8529"
+    env_file:
+      - /home/ec2-user/.env
+    environment:
+      - ARANGO_ROOT_PASSWORD
+    volumes:
+      - /mnt/data/arangodb:/var/lib/arangodb3
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_REGION}
+        awslogs-group: ${AWS_LOG_GROUP}
+        awslogs-stream: "ArangoDB-${CURRENT_DATE}"
+        awslogs-create-group: "false"
+        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
+
+  redis:
+    image: redis:latest
+    command: /bin/sh -c "redis-server --requirepass \"$${REDIS_PASSWORD}\""
+    ports:
+      - "6379:6379"
+    env_file:
+      - /home/ec2-user/.env
+    environment:
+      - REDIS_PASSWORD
+
+  crud:
+    container_name: omni-osint-crud
+    image: ghcr.io/omnsight/omni-osint-crud:latest
+    command: uvicorn omni_osint_crud.main:app --host 0.0.0.0 --port 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - arangodb
+      - redis
+    env_file:
+      - /home/ec2-user/.env
+    environment:
+      - EMBEDDING_AI_API_KEY
+      - EMBEDDING_AI_API_BASE_URL
+      - ARANGODB_PASSWORD
+      - REDIS_PASSWORD
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_REGION}
+        awslogs-group: ${AWS_LOG_GROUP}
+        awslogs-stream: "NexusOsintCrud-${CURRENT_DATE}"
+        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
+
+  query:
+    container_name: omni-osint-query
+    image: ghcr.io/omnsight/omni-osint-query:latest
+    command: uvicorn omni_osint_query.main:app --host 0.0.0.0 --port 8080
+    ports:
+      - "8081:8080"
+    depends_on:
+      - arangodb
+      - redis
+    env_file:
+      - /home/ec2-user/.env
+    environment:
+      - EMBEDDING_AI_API_KEY
+      - EMBEDDING_AI_API_BASE_URL
+      - ARANGODB_PASSWORD
+      - REDIS_PASSWORD
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_REGION}
+        awslogs-group: ${AWS_LOG_GROUP}
+        awslogs-stream: "NexusOsintQuery-${CURRENT_DATE}"
+        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
+
+  monitoring:
+    container_name: omni-monitoring
+    image: ghcr.io/omnsight/omni-monitoring:latest
+    command: uvicorn omni_monitoring.main:app --host 0.0.0.0 --port 8080
+    ports:
+      - "8082:8080"
+    depends_on:
+      - arangodb
+      - redis
+    env_file:
+      - /home/ec2-user/.env
+    environment:
+      - EMBEDDING_AI_API_KEY
+      - EMBEDDING_AI_API_BASE_URL
+      - ARANGODB_PASSWORD
+      - REDIS_PASSWORD
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_REGION}
+        awslogs-group: ${AWS_LOG_GROUP}
+        awslogs-stream: "NexusMonitoring-${CURRENT_DATE}"
+        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
+
+  health-check-proxy:
+    container_name: health-aggregator
+    image: python:3.11-alpine
+    ports:
+      - "8888:8888" # The ALB will ping this port
+    command:
+      - python3
+      - -c
+      - |
+        import http.server, urllib.request, sys
+
+        class HealthHandler(http.server.BaseHTTPRequestHandler):
+          def do_GET(self):
+              # Service names match your docker-compose service names
+              # Internal ports are all 8080
+              urls = [
+                'http://omni-osint-crud:8080/health', 
+                'http://omni-osint-query:8080/health', 
+                'http://omni-monitoring:8080/health'
+              ]
+              try:
+                for url in urls:
+                  with urllib.request.urlopen(url, timeout=2) as r:
+                    if r.getcode() != 200:
+                      raise Exception(f"Failed: {url}")
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b'OK')
+              except Exception as e:
+                print(f"Health check failed: {e}", file=sys.stderr)
+                self.send_response(503)
+                self.end_headers()
+                self.wfile.write(b'FAIL')
+
+          # Silence logs so they don't spam your docker output every 30s
+          def log_message(self, format, *args):
+              return
+
+        print("Starting Health Aggregator on port 8888...")
+        http.server.HTTPServer(('0.0.0.0', 8888), HealthHandler).serve_forever()

@@ -1,3 +1,3 @@
-# Omnisciens
+# Nexus Intelligence Platform
 
 

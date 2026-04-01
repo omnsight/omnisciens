@@ -1,0 +1,6631 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Nexus Intelligence Platform Unified API",
+    "version": "1.0.0"
+  },
+  "x-amazon-apigateway-cors": {
+    "allowOrigins": [
+      "https://api.nexusintelligences.com",
+      "https://nexusintelligences.com"
+    ],
+    "allowMethods": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "OPTIONS"
+    ],
+    "allowHeaders": [
+      "Content-Type",
+      "X-Amz-Date",
+      "Authorization",
+      "X-Api-Key",
+      "X-Amz-Security-Token"
+    ],
+    "maxAge": 600
+  },
+  "paths": {
+    "/person": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create Person",
+        "operationId": "create_person",
+        "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/person",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/organization": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create Organization",
+        "operationId": "create_organization",
+        "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organization",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/event": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create Event",
+        "operationId": "create_event",
+        "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/event",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/website": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create Website",
+        "operationId": "create_website",
+        "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebsiteMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Website"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/website",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/source": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create Source",
+        "operationId": "create_source",
+        "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/source",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/relation": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create Relation",
+        "operationId": "create_relation",
+        "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Relation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/view": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create View",
+        "operationId": "create_view",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OsintViewMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/person/{id}": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Person",
+        "operationId": "get_person",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/person/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Person",
+        "operationId": "update_person",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/person/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/organization/{id}": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Organization",
+        "operationId": "get_organization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organization/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Organization",
+        "operationId": "update_organization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organization/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/event/{id}": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Event",
+        "operationId": "get_event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/event/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Event",
+        "operationId": "update_event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/event/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/website/{id}": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Website",
+        "operationId": "get_website",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Website"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/website/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Website",
+        "operationId": "update_website",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebsiteMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Website"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/website/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/source/{id}": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Source",
+        "operationId": "get_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/source/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Source",
+        "operationId": "update_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/source/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/relation/{id}": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Relation",
+        "operationId": "get_relation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Relation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Relation",
+        "operationId": "update_relation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Relation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "delete"
+        ],
+        "summary": "Delete Relation",
+        "operationId": "delete_relation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/view/{id}/entities": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get View Entities",
+        "operationId": "get_view_entities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entities"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}/entities",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Connect Entity To View",
+        "operationId": "connect_entity_to_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityConnectionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}/entities",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/view/{id}": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get View",
+        "operationId": "get_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update View",
+        "operationId": "update_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OsintViewMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "delete"
+        ],
+        "summary": "Delete View",
+        "operationId": "delete_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/views": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Query Views",
+        "operationId": "query_views",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Text"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryViewsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/person/{id}/permissions": {
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Person Permissions",
+        "operationId": "update_person_permissions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Permissive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/person/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/organization/{id}/permissions": {
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Organization Permissions",
+        "operationId": "update_organization_permissions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Permissive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organization/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/event/{id}/permissions": {
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Event Permissions",
+        "operationId": "update_event_permissions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Permissive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/event/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/website/{id}/permissions": {
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Website Permissions",
+        "operationId": "update_website_permissions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Permissive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Website"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/website/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/source/{id}/permissions": {
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Source Permissions",
+        "operationId": "update_source_permissions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Permissive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/source/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/relation/{id}/permissions": {
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Relation Permissions",
+        "operationId": "update_relation_permissions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Permissive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Relation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relation/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/view/{id}/permissions": {
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update View Permissions",
+        "operationId": "update_view_permissions",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Permissive"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/view/{id}/permissions",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/entity/{id}": {
+      "delete": {
+        "tags": [
+          "delete"
+        ],
+        "summary": "Delete Entity",
+        "operationId": "delete_entity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/entity/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Query Events",
+        "operationId": "query_events",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The search query string.",
+              "title": "Query"
+            },
+            "description": "The search query string."
+          },
+          {
+            "name": "date_start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The start of the date range for the query.",
+              "title": "Date Start"
+            },
+            "description": "The start of the date range for the query."
+          },
+          {
+            "name": "date_end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The end of the date range for the query.",
+              "title": "Date End"
+            },
+            "description": "The end of the date range for the query."
+          },
+          {
+            "name": "country_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The country code to filter the query by.",
+              "title": "Country Code"
+            },
+            "description": "The country code to filter the query by."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "default": 30,
+              "title": "Limit"
+            },
+            "description": "The maximum number of results to return."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The offset from which to start returning results.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "The offset from which to start returning results."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/events",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/entities/{id}/neighbors": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Query Neighbors",
+        "operationId": "query_neighbors",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "default": 30,
+              "title": "Limit"
+            },
+            "description": "The maximum number of results to return."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The offset from which to start returning results.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "The offset from which to start returning results."
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to include.",
+              "title": "Include"
+            },
+            "description": "A list of entity types to include."
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to exclude.",
+              "title": "Exclude"
+            },
+            "description": "A list of entity types to exclude."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NeighborsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/entities/{id}/neighbors",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/entities/neighbors": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Query Neighbors Batch",
+        "operationId": "query_neighbors_batch",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 100,
+              "description": "A list of entity IDs to query neighbors for.",
+              "title": "Ids"
+            },
+            "description": "A list of entity IDs to query neighbors for."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "default": 30,
+              "title": "Limit"
+            },
+            "description": "The maximum number of results to return."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The offset from which to start returning results.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "The offset from which to start returning results."
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to include.",
+              "title": "Include"
+            },
+            "description": "A list of entity types to include."
+          },
+          {
+            "name": "exclude",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "A list of entity types to exclude.",
+              "title": "Exclude"
+            },
+            "description": "A list of entity types to exclude."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NeighborsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/entities/neighbors",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/monitoring-sources": {
+      "post": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Create Monitoring Source",
+        "operationId": "create_monitoring_source",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitoringSourceMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitoringSource"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Get Monitoring Sources By User",
+        "operationId": "get_monitoring_sources_by_user",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MonitoringSource"
+                  },
+                  "title": "Response Get Monitoring Sources By User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/monitoring-sources/{id}/views": {
+      "get": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Get Monitoring Source Views",
+        "operationId": "get_monitoring_source_views",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OsintView"
+                  },
+                  "title": "Response Get Monitoring Source Views"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/monitoring-sources/{id}": {
+      "get": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Get Monitoring Source",
+        "operationId": "get_monitoring_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitoringSource"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Update Monitoring Source",
+        "operationId": "update_monitoring_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitoringSourceMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitoringSource"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Delete Monitoring Source",
+        "operationId": "delete_monitoring_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/monitor-triggers": {
+      "post": {
+        "tags": [
+          "Monitor Triggers"
+        ],
+        "summary": "Create Monitor Trigger",
+        "operationId": "create_monitor_trigger",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitorTriggerMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorTrigger"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitor-triggers",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Monitor Triggers"
+        ],
+        "summary": "Get Monitor Trigger",
+        "operationId": "get_monitor_trigger",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitorTrigger"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitor-triggers",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Monitor Triggers"
+        ],
+        "summary": "Delete Monitor Trigger",
+        "operationId": "delete_monitor_trigger",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitor-triggers",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "CognitoAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "x-amazon-apigateway-authtype": "cognito_user_pools",
+        "x-amazon-apigateway-authorizer": {
+          "type": "cognito_user_pools",
+          "providerARNs": [
+            "${COGNITO_USER_POOL_ARN}"
+          ]
+        }
+      }
+    },
+    "schemas": {
+      "Entities": {
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "type": "array",
+            "title": "Events",
+            "description": "A list of events related to the entity."
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources",
+            "description": "A list of sources related to the entity."
+          },
+          "people": {
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "type": "array",
+            "title": "People",
+            "description": "A list of persons related to the entity."
+          },
+          "organizations": {
+            "items": {
+              "$ref": "#/components/schemas/Organization"
+            },
+            "type": "array",
+            "title": "Organizations",
+            "description": "A list of organizations related to the entity."
+          },
+          "websites": {
+            "items": {
+              "$ref": "#/components/schemas/Website"
+            },
+            "type": "array",
+            "title": "Websites",
+            "description": "A list of websites related to the entity."
+          },
+          "relations": {
+            "items": {
+              "$ref": "#/components/schemas/Relation"
+            },
+            "type": "array",
+            "title": "Relations",
+            "description": "A list of relations related to the entity."
+          }
+        },
+        "type": "object",
+        "title": "Entities"
+      },
+      "EntityConnectionRequest": {
+        "properties": {
+          "entity_id": {
+            "type": "string",
+            "title": "Entity Id",
+            "description": "The ID of the entity to connect to the view."
+          }
+        },
+        "type": "object",
+        "required": [
+          "entity_id"
+        ],
+        "title": "EntityConnectionRequest"
+      },
+      "Event": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of event"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LocationData"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Location of the event"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "Title of the event. Keep it short and clear."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Brief description of the event. Keep it short and clear."
+          },
+          "happened_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Happened At",
+            "description": "Timestamp when the event happened"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          }
+        },
+        "type": "object",
+        "title": "Event",
+        "description": "Represents an event."
+      },
+      "EventMainData": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of event"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LocationData"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Location of the event"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "Title of the event. Keep it short and clear."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Brief description of the event. Keep it short and clear."
+          },
+          "happened_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Happened At",
+            "description": "Timestamp when the event happened"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          }
+        },
+        "type": "object",
+        "title": "EventMainData"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LocationData": {
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "title": "Latitude",
+            "description": "Latitude"
+          },
+          "longitude": {
+            "type": "number",
+            "title": "Longitude",
+            "description": "Longitude"
+          },
+          "country_code": {
+            "type": "string",
+            "maxLength": 2,
+            "title": "Country Code",
+            "description": "ISO country code"
+          },
+          "administrative_area": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Administrative Area",
+            "description": "Administrative area (e.g., state, province)"
+          },
+          "sub_administrative_area": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Sub Administrative Area",
+            "description": "Sub-administrative area",
+            "default": ""
+          },
+          "locality": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Locality",
+            "description": "Locality (e.g., city, town)"
+          },
+          "sub_locality": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Sub Locality",
+            "description": "Sub-locality",
+            "default": ""
+          },
+          "address": {
+            "type": "string",
+            "maxLength": 200,
+            "title": "Address",
+            "description": "Full address"
+          },
+          "postal_code": {
+            "type": "integer",
+            "maximum": 9999999999,
+            "minimum": 0,
+            "title": "Postal Code",
+            "description": "Postal code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "latitude",
+          "longitude",
+          "country_code",
+          "administrative_area",
+          "locality",
+          "address",
+          "postal_code"
+        ],
+        "title": "LocationData",
+        "description": "Represents geographical location data."
+      },
+      "Organization": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of organization"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the organization"
+          },
+          "founded_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founded At",
+            "description": "When organization is founded (timestamp)"
+          },
+          "discovered_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discovered At",
+            "description": "When organization is discovered (timestamp)"
+          },
+          "last_visited": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Visited",
+            "description": "When organization is last visited (timestamp)"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          }
+        },
+        "type": "object",
+        "title": "Organization",
+        "description": "Represents an organization."
+      },
+      "OrganizationMainData": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of organization"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the organization"
+          },
+          "founded_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founded At",
+            "description": "When organization is founded (timestamp)"
+          },
+          "discovered_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discovered At",
+            "description": "When organization is discovered (timestamp)"
+          },
+          "last_visited": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Visited",
+            "description": "When organization is last visited (timestamp)"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          }
+        },
+        "type": "object",
+        "title": "OrganizationMainData"
+      },
+      "OsintView": {
+        "properties": {
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the view"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Description of the view"
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array",
+                "maxItems": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis",
+            "description": "Json based analysis report doc"
+          }
+        },
+        "type": "object",
+        "title": "OsintView"
+      },
+      "OsintViewMainData": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the view"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Description of the view"
+          },
+          "analysis": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array",
+                "maxItems": 5000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis",
+            "description": "Json based analysis report doc"
+          }
+        },
+        "type": "object",
+        "title": "OsintViewMainData"
+      },
+      "Permissive": {
+        "properties": {
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          }
+        },
+        "type": "object",
+        "title": "Permissive",
+        "description": "Base class for permission-related fields."
+      },
+      "Person": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Role type of person"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role",
+            "description": "Role"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name"
+          },
+          "nationality": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nationality",
+            "description": "Nationality"
+          },
+          "birth_date": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birth Date",
+            "description": "Person's birth date (timestamp)"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "aliases": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aliases",
+            "description": "Aliases"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          }
+        },
+        "type": "object",
+        "title": "Person",
+        "description": "Represents a person."
+      },
+      "PersonMainData": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Role type of person"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role",
+            "description": "Role"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name"
+          },
+          "nationality": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nationality",
+            "description": "Nationality"
+          },
+          "birth_date": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Birth Date",
+            "description": "Person's birth date (timestamp)"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "aliases": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aliases",
+            "description": "Aliases"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          }
+        },
+        "type": "object",
+        "title": "PersonMainData"
+      },
+      "QueryViewsResponse": {
+        "properties": {
+          "views": {
+            "items": {
+              "$ref": "#/components/schemas/OsintView"
+            },
+            "type": "array",
+            "title": "Views",
+            "description": "A list of views"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset",
+            "description": "The offset from which to start returning results.",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "QueryViewsResponse"
+      },
+      "Relation": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the relation used in database key (must be ascii letters)"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence",
+            "description": "Confidence score"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label",
+            "description": "Label name of the relation (can be any language) to display"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          },
+          "_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From",
+            "description": "Source document ID"
+          },
+          "_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "To",
+            "description": "Target document ID"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          }
+        },
+        "type": "object",
+        "title": "Relation",
+        "description": "Represents a relationship between two entities."
+      },
+      "RelationMainData": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the relation used in database key (must be ascii letters)"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence",
+            "description": "Confidence score"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label",
+            "description": "Label name of the relation (can be any language) to display"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          },
+          "_from": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From",
+            "description": "Source document ID"
+          },
+          "_to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "To",
+            "description": "Target document ID"
+          }
+        },
+        "type": "object",
+        "title": "RelationMainData"
+      },
+      "Source": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of source"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "URL"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the source"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "Title of the source. Keep it short and clear."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Brief description of the source. Keep it short and clear."
+          },
+          "reliability": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reliability",
+            "description": "Reliability score"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          }
+        },
+        "type": "object",
+        "title": "Source",
+        "description": "Represents a source of information."
+      },
+      "SourceMainData": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of source"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "URL"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the source"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "Title of the source. Keep it short and clear."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Brief description of the source. Keep it short and clear."
+          },
+          "reliability": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reliability",
+            "description": "Reliability score"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          }
+        },
+        "type": "object",
+        "title": "SourceMainData"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "Website": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of website"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "URL"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "Title of the website. Keep it short and clear."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Brief description of the website. Keep it short and clear."
+          },
+          "founded_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founded At",
+            "description": "When website is founded (timestamp)"
+          },
+          "discovered_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discovered At",
+            "description": "When website is discovered (timestamp)"
+          },
+          "last_visited": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Visited",
+            "description": "When website is last visited (timestamp)"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Owner of the document"
+          },
+          "read": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Read",
+            "description": "Users/Roles with read access"
+          },
+          "write": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 100,
+            "title": "Write",
+            "description": "Users/Roles with write access"
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          }
+        },
+        "type": "object",
+        "title": "Website",
+        "description": "Represents a website."
+      },
+      "WebsiteMainData": {
+        "properties": {
+          "type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type",
+            "description": "Type of website"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "URL"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title",
+            "description": "Title of the website. Keep it short and clear."
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Brief description of the website. Keep it short and clear."
+          },
+          "founded_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founded At",
+            "description": "When website is founded (timestamp)"
+          },
+          "discovered_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discovered At",
+            "description": "When website is discovered (timestamp)"
+          },
+          "last_visited": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Visited",
+            "description": "When website is last visited (timestamp)"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags",
+            "description": "Tags"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Additional attributes"
+          }
+        },
+        "type": "object",
+        "title": "WebsiteMainData"
+      },
+      "NeighborsResponse": {
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "type": "array",
+            "title": "Events",
+            "description": "A list of events related to the entity."
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/Source"
+            },
+            "type": "array",
+            "title": "Sources",
+            "description": "A list of sources related to the entity."
+          },
+          "persons": {
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "type": "array",
+            "title": "Persons",
+            "description": "A list of persons related to the entity."
+          },
+          "organizations": {
+            "items": {
+              "$ref": "#/components/schemas/Organization"
+            },
+            "type": "array",
+            "title": "Organizations",
+            "description": "A list of organizations related to the entity."
+          },
+          "websites": {
+            "items": {
+              "$ref": "#/components/schemas/Website"
+            },
+            "type": "array",
+            "title": "Websites",
+            "description": "A list of websites related to the entity."
+          },
+          "relations": {
+            "items": {
+              "$ref": "#/components/schemas/Relation"
+            },
+            "type": "array",
+            "title": "Relations",
+            "description": "A list of relations related to the entity."
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset",
+            "description": "The offset from which to start returning results.",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "NeighborsResponse"
+      },
+      "QueryResponse": {
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/Event"
+            },
+            "type": "array",
+            "title": "Events",
+            "description": "A list of events that match the query."
+          },
+          "relations": {
+            "items": {
+              "$ref": "#/components/schemas/Relation"
+            },
+            "type": "array",
+            "title": "Relations",
+            "description": "A list of relations that match the query."
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset",
+            "description": "The offset from which to start returning results.",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "title": "QueryResponse"
+      },
+      "MonitorTrigger": {
+        "properties": {
+          "language": {
+            "type": "string",
+            "maxLength": 10,
+            "title": "Language",
+            "description": "The language that workflow generates data in by the trigger"
+          },
+          "user_id": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "User Id",
+            "description": "ID of user who created the trigger"
+          }
+        },
+        "type": "object",
+        "required": [
+          "language",
+          "user_id"
+        ],
+        "title": "MonitorTrigger",
+        "description": "Model for monitor trigger."
+      },
+      "MonitorTriggerMainData": {
+        "properties": {
+          "language": {
+            "type": "string",
+            "maxLength": 10,
+            "title": "Language",
+            "description": "The language that workflow generates data in by the trigger"
+          }
+        },
+        "type": "object",
+        "required": [
+          "language"
+        ],
+        "title": "MonitorTriggerMainData",
+        "description": "Model for monitor trigger."
+      },
+      "MonitoringSource": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the monitoring source"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Describe what kind of information the source focuses on"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceType",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type of the monitoring source such as 'website', 'twitter', 'telegram'"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "URL of the monitoring source"
+          },
+          "reliability": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reliability",
+            "description": "Reliability score of the monitoring source, ranging from 0 to 100"
+          },
+          "last_reviewed": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Reviewed",
+            "description": "The last time the source was reviewed, in epoch time"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Platform-specific identifiers or handles required to monitor the source via API calls. Examples include a Twitter user id or a Telegram channel ID."
+          },
+          "_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id",
+            "description": "ArangoDB document ID"
+          },
+          "_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key",
+            "description": "ArangoDB document key"
+          },
+          "_rev": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rev",
+            "description": "ArangoDB document revision"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At",
+            "description": "Data creation timestamp"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At",
+            "description": "Data update timestamp"
+          },
+          "owner": {
+            "type": "string",
+            "maxLength": 100,
+            "title": "Owner",
+            "description": "Identify the user the monitoring source belongs to"
+          }
+        },
+        "type": "object",
+        "required": [
+          "owner"
+        ],
+        "title": "MonitoringSource"
+      },
+      "MonitoringSourceMainData": {
+        "properties": {
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name",
+            "description": "Name of the monitoring source"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description",
+            "description": "Describe what kind of information the source focuses on"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceType",
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Type of the monitoring source such as 'website', 'twitter', 'telegram'"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url",
+            "description": "URL of the monitoring source"
+          },
+          "reliability": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 100,
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reliability",
+            "description": "Reliability score of the monitoring source, ranging from 0 to 100"
+          },
+          "last_reviewed": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Reviewed",
+            "description": "The last time the source was reviewed, in epoch time"
+          },
+          "attributes": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object",
+                "maxProperties": 50
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attributes",
+            "description": "Platform-specific identifiers or handles required to monitor the source via API calls. Examples include a Twitter user id or a Telegram channel ID."
+          }
+        },
+        "type": "object",
+        "title": "MonitoringSourceMainData"
+      },
+      "SourceType": {
+        "type": "string",
+        "enum": [
+          "website",
+          "twitter",
+          "telegram"
+        ],
+        "title": "SourceType"
+      }
+    }
+  }
+}
