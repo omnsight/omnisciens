@@ -57,7 +57,7 @@ async function mergeSpecs() {
         methods[method]['x-amazon-apigateway-integration'] = {
           type: 'http_proxy',
           httpMethod: 'ANY',
-          uri: `http://\${ALB_DNS}:${service.port}${path}`,
+          uri: `http://\${ALB_DNS}:${service.port}${path.replace('{id}', '{collection}/{key}')}`,
           connectionType: 'INTERNET',
           requestParameters: {
             'integration.request.header.x-user-id': 'context.authorizer.claims.sub',
@@ -66,7 +66,8 @@ async function mergeSpecs() {
           }
         };
       });
-      baseSpec.paths[path] = methods;
+
+      baseSpec.paths[path.replace('{id}', '{collection}/{key}')] = methods;
     });
 
     if (data.components?.schemas) {
