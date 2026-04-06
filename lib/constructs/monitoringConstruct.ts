@@ -1,7 +1,7 @@
 import { Duration } from 'aws-cdk-lib';
 import { SpecRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { AutoScalingGroup } from 'aws-cdk-lib/aws-autoscaling';
-import { Dashboard, GraphWidget, MathExpression, Metric, TextWidget } from 'aws-cdk-lib/aws-cloudwatch';
+import { Dashboard, GraphWidget, LogQueryWidget, MathExpression, Metric, TextWidget } from 'aws-cdk-lib/aws-cloudwatch';
 import { UserPool } from 'aws-cdk-lib/aws-cognito';
 import { Volume } from 'aws-cdk-lib/aws-ec2';
 import { ApplicationTargetGroup } from 'aws-cdk-lib/aws-elasticloadbalancingv2';
@@ -84,17 +84,29 @@ export class MonitoringConstruct extends Construct {
       ),
     );
 
-    //     dashboard.addWidgets(new LogQueryWidget({
-    //       title: 'API Gateway Access Logs (Errors)',
-    //       logGroupNames: [api.accessLogGroup.logGroupName],
-    //       queryString: `
-    // fields @timestamp, @message
-    // | filter status >= 400
-    // | sort @timestamp desc
-    // | limit 20
-    //       `.trim(),
-    //       width: 24,
-    //     }));
+    dashboard.addWidgets(new LogQueryWidget({
+      title: 'Service API Server Errors (EC2)',
+      logGroupNames: [serviceLogGroup.logGroupName],
+      queryString: `
+        fields @timestamp, name, status_code
+        | filter name = "fastapi_json"
+        | filter status_code >= 500
+        | sort @timestamp desc
+        | limit 20
+      `.trim(),
+      width: 24,
+    }));
+    dashboard.addWidgets(new LogQueryWidget({
+      title: 'Service API Access Logs (EC2)',
+      logGroupNames: [serviceLogGroup.logGroupName],
+      queryString: `
+        fields @timestamp, name, status_code
+        | filter name = "fastapi_json"
+        | sort @timestamp desc
+        | limit 20
+      `.trim(),
+      width: 24,
+    }));
 
     //     dashboard.addWidgets(new LogQueryWidget({
     //       title: 'API Gateway Execution Logs (Errors)',

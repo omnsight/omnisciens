@@ -110,6 +110,181 @@
           }
         }
       },
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Person",
+        "operationId": "get_person",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/persons",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Person",
+        "operationId": "update_person",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/persons",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
       "options": {
         "summary": "CORS preflight",
         "responses": {
@@ -214,129 +389,34 @@
           }
         }
       },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/organizations",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/events": {
       "get": {
         "tags": [
-          "query"
+          "read"
         ],
-        "summary": "Query Events",
-        "operationId": "query_events",
+        "summary": "Get Organization",
+        "operationId": "get_organization",
         "parameters": [
           {
-            "name": "query",
+            "name": "id",
             "in": "query",
-            "required": false,
+            "required": true,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "The search query string.",
-              "title": "Query"
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
             },
-            "description": "The search query string."
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
           },
           {
-            "name": "date_start",
+            "name": "include_pending",
             "in": "query",
             "required": false,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "integer"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "The start of the date range for the query.",
-              "title": "Date Start"
-            },
-            "description": "The start of the date range for the query."
-          },
-          {
-            "name": "date_end",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "integer"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "The end of the date range for the query.",
-              "title": "Date End"
-            },
-            "description": "The end of the date range for the query."
-          },
-          {
-            "name": "country_code",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "The country code to filter the query by.",
-              "title": "Country Code"
-            },
-            "description": "The country code to filter the query by."
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "description": "The maximum number of results to return.",
-              "default": 30,
-              "title": "Limit"
-            },
-            "description": "The maximum number of results to return."
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "description": "The offset from which to start returning results.",
-              "default": 0,
-              "title": "Offset"
-            },
-            "description": "The offset from which to start returning results."
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
           },
           {
             "name": "authorization",
@@ -361,7 +441,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/QueryResponse"
+                  "$ref": "#/components/schemas/Organization"
                 }
               }
             }
@@ -380,7 +460,102 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8081/events",
+          "uri": "http://${ALB_DNS}:8080/organizations",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Organization",
+        "operationId": "update_organization",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganizationMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organization"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/organizations",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -399,7 +574,286 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8081/events",
+          "uri": "http://${ALB_DNS}:8080/organizations",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/events": {
+      "post": {
+        "tags": [
+          "create"
+        ],
+        "summary": "Create Event",
+        "operationId": "create_event",
+        "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/events",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Event",
+        "operationId": "get_event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/events",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Event",
+        "operationId": "update_event",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/events",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/events",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -417,6 +871,181 @@
         "summary": "Create Website",
         "operationId": "create_website",
         "parameters": [
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebsiteMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Website"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/websites",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Website",
+        "operationId": "get_website",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Website"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/websites",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Website",
+        "operationId": "update_website",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
           {
             "name": "include_pending",
             "in": "query",
@@ -597,6 +1226,181 @@
           }
         }
       },
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Source",
+        "operationId": "get_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Source",
+        "operationId": "update_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Source"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
       "options": {
         "summary": "CORS preflight",
         "responses": {
@@ -670,6 +1474,254 @@
                 "schema": {
                   "$ref": "#/components/schemas/Relation"
                 }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relations",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get Relation",
+        "operationId": "get_relation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Relation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relations",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update Relation",
+        "operationId": "update_relation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "include_pending",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Include Pending"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RelationMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Relation"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/relations",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "delete"
+        ],
+        "summary": "Delete Relation",
+        "operationId": "delete_relation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -799,6 +1851,431 @@
         "tags": [
           "read"
         ],
+        "summary": "Get View",
+        "operationId": "get_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Update View",
+        "operationId": "update_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OsintViewMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "delete"
+        ],
+        "summary": "Delete View",
+        "operationId": "delete_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/views/entities": {
+      "get": {
+        "tags": [
+          "read"
+        ],
+        "summary": "Get View Entities",
+        "operationId": "get_view_entities",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entities"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views/entities",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Connect Entity To View",
+        "operationId": "connect_entity_to_view",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EntityConnectionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OsintView"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views/entities",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8080/views/entities",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/views/query": {
+      "get": {
+        "tags": [
+          "read"
+        ],
         "summary": "Query Views",
         "operationId": "query_views",
         "parameters": [
@@ -880,7 +2357,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views",
+          "uri": "http://${ALB_DNS}:8080/views/query",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -899,7 +2376,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views",
+          "uri": "http://${ALB_DNS}:8080/views/query",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -909,1681 +2386,7 @@
         }
       }
     },
-    "/persons/{id}": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get Person",
-        "operationId": "get_person",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/persons/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Update Person",
-        "operationId": "update_person",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PersonMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Person"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/persons/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/persons/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/organizations/{id}": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get Organization",
-        "operationId": "get_organization",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Organization"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/organizations/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Update Organization",
-        "operationId": "update_organization",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrganizationMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Organization"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/organizations/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/organizations/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/events/{id}": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get Event",
-        "operationId": "get_event",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Event"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/events/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Update Event",
-        "operationId": "update_event",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EventMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Event"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/events/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/events/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/websites/{id}": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get Website",
-        "operationId": "get_website",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Website"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/websites/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Update Website",
-        "operationId": "update_website",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WebsiteMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Website"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/websites/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/websites/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/sources/{id}": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get Source",
-        "operationId": "get_source",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Source"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/sources/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Update Source",
-        "operationId": "update_source",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/SourceMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Source"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/sources/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/sources/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/relations/{id}": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get Relation",
-        "operationId": "get_relation",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Relation"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/relations/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Update Relation",
-        "operationId": "update_relation",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "include_pending",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false,
-              "title": "Include Pending"
-            }
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RelationMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Relation"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/relations/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "delete"
-        ],
-        "summary": "Delete Relation",
-        "operationId": "delete_relation",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/relations/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/relations/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/views/{id}/entities": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get View Entities",
-        "operationId": "get_view_entities",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Entities"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}/entities",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Connect Entity To View",
-        "operationId": "connect_entity_to_view",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/EntityConnectionRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OsintView"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}/entities",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}/entities",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/views/{id}": {
-      "get": {
-        "tags": [
-          "read"
-        ],
-        "summary": "Get View",
-        "operationId": "get_view",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OsintView"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "update"
-        ],
-        "summary": "Update View",
-        "operationId": "update_view",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OsintViewMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OsintView"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "delete"
-        ],
-        "summary": "Delete View",
-        "operationId": "delete_view",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/persons/{id}/permissions": {
+    "/persons/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2593,7 +2396,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -2660,7 +2463,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/persons/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/persons/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -2679,7 +2482,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/persons/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/persons/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -2689,7 +2492,7 @@
         }
       }
     },
-    "/organizations/{id}/permissions": {
+    "/organizations/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2699,7 +2502,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -2766,7 +2569,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/organizations/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/organizations/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -2785,7 +2588,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/organizations/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/organizations/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -2795,7 +2598,7 @@
         }
       }
     },
-    "/events/{id}/permissions": {
+    "/events/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2805,7 +2608,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -2872,7 +2675,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/events/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/events/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -2891,7 +2694,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/events/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/events/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -2901,7 +2704,7 @@
         }
       }
     },
-    "/websites/{id}/permissions": {
+    "/websites/permissions": {
       "put": {
         "tags": [
           "update"
@@ -2911,7 +2714,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -2978,7 +2781,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/websites/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/websites/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -2997,7 +2800,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/websites/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/websites/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3007,7 +2810,7 @@
         }
       }
     },
-    "/sources/{id}/permissions": {
+    "/sources/permissions": {
       "put": {
         "tags": [
           "update"
@@ -3017,7 +2820,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -3084,7 +2887,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/sources/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/sources/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3103,7 +2906,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/sources/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/sources/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3113,7 +2916,7 @@
         }
       }
     },
-    "/relations/{id}/permissions": {
+    "/relations/permissions": {
       "put": {
         "tags": [
           "update"
@@ -3123,7 +2926,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -3190,7 +2993,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/relations/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/relations/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3209,7 +3012,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/relations/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/relations/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3219,7 +3022,7 @@
         }
       }
     },
-    "/views/{id}/permissions": {
+    "/views/permissions": {
       "put": {
         "tags": [
           "update"
@@ -3229,7 +3032,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -3296,7 +3099,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/views/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3315,7 +3118,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/views/{id}/permissions",
+          "uri": "http://${ALB_DNS}:8080/views/permissions",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3325,7 +3128,7 @@
         }
       }
     },
-    "/entities/{id}": {
+    "/entities": {
       "delete": {
         "tags": [
           "delete"
@@ -3335,7 +3138,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -3390,7 +3193,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/entities/{id}",
+          "uri": "http://${ALB_DNS}:8080/entities",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3409,7 +3212,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8080/entities/{id}",
+          "uri": "http://${ALB_DNS}:8080/entities",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3419,7 +3222,182 @@
         }
       }
     },
-    "/entities/{id}/neighbors": {
+    "/events/query": {
+      "get": {
+        "tags": [
+          "query"
+        ],
+        "summary": "Query Events",
+        "operationId": "query_events",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The search query string.",
+              "title": "Query"
+            },
+            "description": "The search query string."
+          },
+          {
+            "name": "date_start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The start of the date range for the query.",
+              "title": "Date Start"
+            },
+            "description": "The start of the date range for the query."
+          },
+          {
+            "name": "date_end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The end of the date range for the query.",
+              "title": "Date End"
+            },
+            "description": "The end of the date range for the query."
+          },
+          {
+            "name": "country_code",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The country code to filter the query by.",
+              "title": "Country Code"
+            },
+            "description": "The country code to filter the query by."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The maximum number of results to return.",
+              "default": 30,
+              "title": "Limit"
+            },
+            "description": "The maximum number of results to return."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "description": "The offset from which to start returning results.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "The offset from which to start returning results."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/events/query",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8081/events/query",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/entity/neighbors": {
       "get": {
         "tags": [
           "query"
@@ -3429,7 +3407,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string",
@@ -3533,7 +3511,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8081/entities/{id}/neighbors",
+          "uri": "http://${ALB_DNS}:8081/entity/neighbors",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3552,7 +3530,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8081/entities/{id}/neighbors",
+          "uri": "http://${ALB_DNS}:8081/entity/neighbors",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3786,6 +3764,345 @@
         "tags": [
           "Monitoring Sources"
         ],
+        "summary": "Get Monitoring Source",
+        "operationId": "get_monitoring_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitoringSource"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Update Monitoring Source",
+        "operationId": "update_monitoring_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MonitoringSourceMainData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MonitoringSource"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Delete Monitoring Source",
+        "operationId": "delete_monitoring_source",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "CognitoAuth": []
+          }
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/monitoring-sources/views": {
+      "get": {
+        "tags": [
+          "Monitoring Sources"
+        ],
+        "summary": "Get Monitoring Source Views",
+        "operationId": "get_monitoring_source_views",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
+              "description": "The ArangoDB Document ID (e.g., collection/123)",
+              "title": "Id"
+            },
+            "description": "The ArangoDB Document ID (e.g., collection/123)"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OsintView"
+                  },
+                  "title": "Response Get Monitoring Source Views"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      },
+      "options": {
+        "summary": "CORS preflight",
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method"
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "http_proxy",
+          "httpMethod": "ANY",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/views",
+          "connectionType": "INTERNET",
+          "requestParameters": {
+            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
+            "integration.request.header.x-user-email": "context.authorizer.claims.email",
+            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
+          }
+        }
+      }
+    },
+    "/monitoring-sources/user": {
+      "get": {
+        "tags": [
+          "Monitoring Sources"
+        ],
         "summary": "Get Monitoring Sources By User",
         "operationId": "get_monitoring_sources_by_user",
         "parameters": [
@@ -3855,7 +4172,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/user",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
@@ -3874,346 +4191,7 @@
         "x-amazon-apigateway-integration": {
           "type": "http_proxy",
           "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/monitoring-sources/{id}/views": {
-      "get": {
-        "tags": [
-          "Monitoring Sources"
-        ],
-        "summary": "Get Monitoring Source Views",
-        "operationId": "get_monitoring_source_views",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/OsintView"
-                  },
-                  "title": "Response Get Monitoring Source Views"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}/views",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}/views",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      }
-    },
-    "/monitoring-sources/{id}": {
-      "get": {
-        "tags": [
-          "Monitoring Sources"
-        ],
-        "summary": "Get Monitoring Source",
-        "operationId": "get_monitoring_source",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MonitoringSource"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Monitoring Sources"
-        ],
-        "summary": "Update Monitoring Source",
-        "operationId": "update_monitoring_source",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MonitoringSourceMainData"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MonitoringSource"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Monitoring Sources"
-        ],
-        "summary": "Delete Monitoring Source",
-        "operationId": "delete_monitoring_source",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "pattern": "^[A-Za-z0-9_-]+\\/[A-Za-z0-9_-]+$",
-              "description": "The ArangoDB Document ID (e.g., collection/123)",
-              "title": "Id"
-            },
-            "description": "The ArangoDB Document ID (e.g., collection/123)"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Authorization"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Successful Response"
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "CognitoAuth": []
-          }
-        ],
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
-          "connectionType": "INTERNET",
-          "requestParameters": {
-            "integration.request.header.x-user-id": "context.authorizer.claims.sub",
-            "integration.request.header.x-user-email": "context.authorizer.claims.email",
-            "integration.request.header.x-user-roles": "context.authorizer.claims.[\"cognito:groups\"]"
-          }
-        }
-      },
-      "options": {
-        "summary": "CORS preflight",
-        "responses": {
-          "200": {
-            "description": "Default response for CORS method"
-          }
-        },
-        "x-amazon-apigateway-integration": {
-          "type": "http_proxy",
-          "httpMethod": "ANY",
-          "uri": "http://${ALB_DNS}:8082/monitoring-sources/{id}",
+          "uri": "http://${ALB_DNS}:8082/monitoring-sources/user",
           "connectionType": "INTERNET",
           "requestParameters": {
             "integration.request.header.x-user-id": "context.authorizer.claims.sub",
