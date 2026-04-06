@@ -170,17 +170,17 @@ export class ServiceConstruct extends Construct {
       resources: [`${this.logGroup.logGroupArn}:*`],
     }));
 
-    this.asg.scaleOnSchedule(`PreserveBudgetNightly-${stage}`, {
-      schedule: Schedule.cron({ hour: '9', minute: '0' }),
-      desiredCapacity: 0,
-      minCapacity: 0,
-      maxCapacity: 0,
-    });
     this.asg.scaleOnSchedule(`WakeUpForWork-${stage}`, {
-      schedule: Schedule.cron({ hour: '1', minute: '0' }),
+      schedule: Schedule.cron({ hour: '2', minute: '0' }), // UTC - 7 = PDT 7 PM
       desiredCapacity: 1,
       minCapacity: 1,
       maxCapacity: 1,
+    });
+    this.asg.scaleOnSchedule(`PreserveBudgetNightly-${stage}`, {
+      schedule: Schedule.cron({ hour: '7', minute: '0' }), // UTC - 7 = PDT 12 AM
+      desiredCapacity: 0,
+      minCapacity: 0,
+      maxCapacity: 0,
     });
     this.asg.addToRolePolicy(new PolicyStatement({
       actions: ['secretsmanager:GetSecretValue'],

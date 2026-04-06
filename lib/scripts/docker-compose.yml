@@ -15,9 +15,8 @@ services:
       options:
         awslogs-region: ${AWS_REGION}
         awslogs-group: ${AWS_LOG_GROUP}
-        awslogs-stream: "ArangoDB-${CURRENT_DATE}"
+        awslogs-stream: "${CURRENT_DATE}-ArangoDB"
         awslogs-create-group: "false"
-        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
 
   redis:
     image: redis:latest
@@ -50,8 +49,7 @@ services:
       options:
         awslogs-region: ${AWS_REGION}
         awslogs-group: ${AWS_LOG_GROUP}
-        awslogs-stream: "NexusOsintCrud-${CURRENT_DATE}"
-        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
+        awslogs-stream: "${CURRENT_DATE}-NexusOsintCrud"
 
   query:
     container_name: omni-osint-query
@@ -74,8 +72,7 @@ services:
       options:
         awslogs-region: ${AWS_REGION}
         awslogs-group: ${AWS_LOG_GROUP}
-        awslogs-stream: "NexusOsintQuery-${CURRENT_DATE}"
-        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
+        awslogs-stream: "${CURRENT_DATE}-NexusOsintQuery"
 
   monitoring:
     container_name: omni-monitoring
@@ -98,8 +95,7 @@ services:
       options:
         awslogs-region: ${AWS_REGION}
         awslogs-group: ${AWS_LOG_GROUP}
-        awslogs-stream: "NexusMonitoring-${CURRENT_DATE}"
-        awslogs-multiline-pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}"
+        awslogs-stream: "${CURRENT_DATE}-NexusMonitoring"
 
   health-check-proxy:
     container_name: health-aggregator
